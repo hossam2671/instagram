@@ -1,0 +1,31 @@
+.suggest {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+.suggest .info{
+    display: flex;
+    align-items: center;
+}
+.suggest .info img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.suggest .info .name h5{
+    font-weight: 600;
+    font-size: 14px;
+    color: #202020;
+}
+.suggest .info .name h5:last-of-type{
+    color: #8b8b8b;
+    font-size: 13px;
+}
+.suggest > h5{
+    font-weight: 500;
+    font-size: 12px;
+    color: #179ff7;
+    cursor: pointer;
+}

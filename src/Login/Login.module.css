@@ -1,0 +1,99 @@
+.login{
+    padding: 40px 300px 5px;
+}
+.login .mainContent{
+    display: flex;
+}
+.login .mainContent .imgs{
+    width: 50%;
+    position: relative;
+}
+.login .mainContent .imgs img:last-of-type{
+    position: absolute;
+    left: 155px;
+    top: 25px;
+}
+.login .mainContent .log{
+    width: 35%;
+    margin-top: 20px;
+}
+.login .mainContent .log .fields{
+    border: 1px solid rgb(211, 211, 211);
+    padding: 30px;
+}
+.login .mainContent .log .fields svg{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.login .mainContent .log .fields h4{
+    width: 100%;
+    height: 30px;
+    background-color: #4eb4f7;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: normal;
+}
+.login .mainContent .log .fields h6{
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+    position: relative;
+    color: rgb(126, 126, 126);
+}
+.login .mainContent .log .fields h6::after{
+    position: absolute;
+    content: "";
+    width: 40%;
+    right: 0;
+    height: 2px;
+    top: 50%;
+    background-color: rgb(211, 211, 211);
+}
+.login .mainContent .log .fields h6::before{
+    position: absolute;
+    content: "";
+    width: 40%;
+    left: 0;
+    height: 2px;
+    top: 50%;
+    background-color: rgb(211, 211, 211);
+}
+.login .mainContent .log .fields h5{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #205d86;
+    font-weight: normal;
+}
+.login .mainContent .log .signUp{
+    margin-top: 25px;
+    text-align: center;
+    padding: 20px 0;
+    border: 1px solid rgb(211, 211, 211);
+}
+.login .mainContent .log .signUp h4{
+    font-size: 13px;
+    font-weight: 500;
+}
+.login .mainContent .log .signUp h4 span{
+    color: #179ff7;
+}
+.login .mainContent .log > h6{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.login .mainContent .log .app{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.login .mainContent .log img{
+    width: 35%;
+    margin: 0 10px;
+}

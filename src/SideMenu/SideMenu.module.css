@@ -1,0 +1,45 @@
+.sideMenu{
+    width: 16%;
+    border-right: 1px solid #dfdfdf;
+    min-height: 100vh;
+    position: fixed;
+}
+.sideMenu .logo{
+    padding: 35px;
+}
+.sideMenu ul{
+    padding: 10px 30px 140px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+.sideMenu ul li{
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+.sideMenu ul li i {
+    width: 35px;
+    font-size: 22px;
+}
+.sideMenu ul li span{
+    font-size: 16px;
+}
+.sideMenu ul li img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.sideMenu .more{
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+}
+.sideMenu .more i{
+    width: 35px;
+    font-size: 22px;
+}
+.sideMenu .more span{
+    font-size: 16px;
+}

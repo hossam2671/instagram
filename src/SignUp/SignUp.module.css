@@ -1,0 +1,95 @@
+.signUp{
+    padding: 20px 350px;
+}
+.signUp .fields{
+    border: 1px solid rgb(211, 211, 211);
+    padding: 40px;
+    margin: 0 240px;
+}
+.signUp .fields svg{
+    width: 100%;
+    margin-bottom: 15px;
+}
+.signUp .fields p:first-of-type{
+    text-align: center;
+    font-weight: 500;
+    color: rgb(100, 100, 100);
+    margin-bottom: 30px;
+}
+.signUp .fields h6{
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+    position: relative;
+    color: rgb(126, 126, 126);
+    margin-bottom: 25px;
+}
+.signUp .fields h6::after{
+    position: absolute;
+    content: "";
+    width: 40%;
+    right: 0;
+    height: 2px;
+    top: 50%;
+    background-color: rgb(211, 211, 211);
+}
+.signUp .fields h6::before{
+    position: absolute;
+    content: "";
+    width: 40%;
+    left: 0;
+    height: 2px;
+    top: 50%;
+    background-color: rgb(211, 211, 211);
+}
+.signUp .fields p:not(:first-of-type){
+    text-align: center;
+    font-size: 11px;
+    margin: 8px 0;
+    color: rgb(126, 126, 126);
+    font-weight: 500;
+}
+.signUp .fields p span{
+    color: #147abe;
+    cursor: pointer;
+}
+.signUp .fields h4{
+    width: 100%;
+    height: 30px;
+    background-color: #4eb4f7;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+.signUp .login{
+    text-align: center;
+    padding: 20px 0;
+    border: 1px solid rgb(211, 211, 211);
+    margin: 10px 240px 0;
+}
+.signUp .login h4{
+    font-size: 13px;
+    font-weight: 500;
+}
+.signUp .login h4 span{
+    color: #179ff7;
+}
+.signUp h6{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.signUp .app{
+    display: flex;
+    justify-content: center;
+    margin: 20px 240px 80px;
+}
+.signUp .app img{
+    width: 40%;
+    margin: 0 10px;
+}
