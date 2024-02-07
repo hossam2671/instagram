@@ -81,6 +81,7 @@
 }
 .login .mainContent .log .signUp h4 span{
     color: #179ff7;
+    cursor: pointer;
 }
 .login .mainContent .log > h6{
     text-align: center;

@@ -7,9 +7,11 @@ import style from './Login.module.css'
 import google from '../assets/google.png'
 import microsoft from '../assets/microsoft.png'
 import Footer from "../Footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [img, setImage] = useState(photo1)
+    const navigate = useNavigate();
     useEffect(()=>{
         const intervalId = setInterval(() => {
             setImage((prevImg) => (prevImg === photo1 ? photo2 : photo1));
@@ -50,7 +52,9 @@ function Login() {
             <h5>Forgot password?</h5>
           </div>
           <div className={style["signUp"]}>
-            <h4>Don't have an account? <span>Sign up</span></h4>
+            <h4>Don't have an account? <span onClick={()=>{
+              navigate("/signUp");
+            }}>Sign up</span></h4>
           </div>
           <h6>Get the app.</h6>
           <div className={style["app"]}>
