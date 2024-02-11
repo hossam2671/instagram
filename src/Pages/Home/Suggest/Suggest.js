@@ -1,31 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Suggest.module.css";
 import profile from '../../../assets/119986446_3340727139310180_8618841474764541280_n.jpg'
 import Suggestion from "./Suggestion/Suggestion";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import SwitchModal from "../../../SwitchModal/SwitchModal";
 
 function Suggest() {
+  const navigate = useNavigate();
+  const [opened,setOpened] = useState(false)
+  const [user,setUser] = useState({})
+  const [suggested,setSuggested] = useState([])
+
+  const handleClose = (x) => {
+    setOpened(false);
+  }
+
+  useEffect(()=>{
+    axios.get("http://localhost:5000/user/getUser",{params:{id:localStorage.getItem("user")}}).then((res)=>{
+      setUser(res.data)
+    }).catch((err)=>{
+      navigate("/login")
+    })
+    axios.get("http://localhost:5000/user/getSuggested",{params:{id:localStorage.getItem("user")}}).then((res)=>{
+      setSuggested(res.data)
+    })
+  },[opened])
   return (
     <div className={style["suggest"]}>
+      <SwitchModal open={opened} handleClose={(x) => handleClose(x)}/>
       <div className={style["profile"]}>
         <div className={style["info"]}>
-            <img src={profile} />
+            <img src={`http://localhost:5000/${user.img}`} />
             <div className={style["name"]}>
-                <h5>markwahlberg</h5>
-                <h5>Mark Wahlberg</h5>
+                <h5>{user.name}</h5>
+                <h5>{user.userName}</h5>
             </div>
         </div>
-        <h5>Switch</h5>
+        <h5 onClick={()=>{
+          setOpened(true)
+        }}>Switch</h5>
       </div>
       <div className={style["suggestedForYou"]}>
         <h4>Suggested for you</h4>
         <h5>See All</h5>
       </div>
       <div className={style["suggestions"]}>
-        <Suggestion name="tcmailbox"/>
-        <Suggestion name="aalaahome"/>
-        <Suggestion name="asalem710"/>
-        <Suggestion name="nadamohsen215"/>
-        <Suggestion name="shekchenko_7"/>
+        {
+          suggested.slice(0, 5).map((suggest)=>(
+            <Suggestion key={suggest._id} name={suggest.userName} id={suggest._id} img={suggest.img}/>
+          ))
+        }
       </div>
       <div className={style["footer"]}>
         <ul>

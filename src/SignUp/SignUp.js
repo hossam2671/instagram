@@ -13,7 +13,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import { useNavigate } from "react-router-dom";
 
-
 function SignUp() {
   const navigate = useNavigate();
 
@@ -88,24 +87,28 @@ function SignUp() {
             variant="filled"
             size="small"
             onKeyUp={(e) => {
-              if (
-                emailRegex.test(e.target.value) ||
-                phoneRegex.test(e.target.value)
-              ) {
-                setTrueEmail(true);
-                setTheErrors((errors) =>
-                  errors.filter(
-                    (error) => error !== "enter a valid email or phone"
-                  )
-                );
+              if (emailRegex.test(e.target.value) || phoneRegex.test(e.target.value)) {
+                axios.post("http://localhost:5000/auth/checkEmail",{email:e.target.value}).then((res) => {
+                  console.log(res)
+                  setTrueEmail(false);
+                  let arr = theErrors;
+                  arr.push("enter a valid email or phone");
+                  setTheErrors(arr);
+                }).catch((error) => {
+                  setTrueEmail(true);
+                  setTheErrors((errors) =>
+                    errors.filter((error) => error !== "enter a valid email or phone")
+                  );
+                });
               } else {
                 setTrueEmail(false);
                 let arr = theErrors;
                 console.log(arr);
-                // arr.push("enter a valid email or phone");
+                arr.push("enter a valid email or phone");
                 setTheErrors(arr);
               }
             }}
+            
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -198,12 +201,19 @@ function SignUp() {
                   setTheErrors(arr);
                 })
                 .catch(() => {
-                  setTrueUserName(true);
-                  setTheErrors((errors) =>
-                    errors.filter(
-                      (error) => error !== "the user Name already exist"
-                    )
-                  );
+                  if (!e.target.value.includes(" ")) {
+                    setTrueUserName(true);
+                    setTheErrors((errors) =>
+                      errors.filter(
+                        (error) => error !== "the user Name already exist"
+                      )
+                    );
+                  } else {
+                    setTrueUserName(false);
+                    let arr = theErrors;
+                    arr.push("the user Name already exist");
+                    setTheErrors(arr);
+                  }
                 });
             }}
             InputProps={{
@@ -264,7 +274,8 @@ function SignUp() {
         </div>
         <div className={style["login"]}>
           <h4>
-            Have an account? <span onClick={()=>navigate("/login")}>Log in</span>
+            Have an account?{" "}
+            <span onClick={() => navigate("/login")}>Log in</span>
           </h4>
         </div>
         <h6>Get the app.</h6>

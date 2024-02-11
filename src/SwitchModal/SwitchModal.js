@@ -1,27 +1,86 @@
-import React, { useState } from "react";
-import profile from "../assets/119986446_3340727139310180_8618841474764541280_n.jpg";
-import style from "./SideMenu.module.css";
-import PostModal from "../PostModal/PostModal";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import style from "./SwitchModal.module.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import CloseIcon from '@mui/icons-material/Close';
 
-function SideMenu() {
-  const [opened,setOpened] = useState(false)
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 450,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  padding:"100px 70px 40px",
+  borderRadius:"12px"
+};
 
-  const handleClose = (x) => {
-    setOpened(false);
+function SwitchModal({ open: op, handleClose: close }) {
+  const [open, setOpen] = React.useState(false);
+  //   const handleOpen = () => setOpen(true);
+//   const handleClose = () => setOpen(false);
+const handleClose = (x) => {
+    close(x);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [errMsg, setErrMsg] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
+  
+
+  function login() {
+    axios
+      .post("http://localhost:5000/auth/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        localStorage.setItem("user",res.data._id)
+        navigate("/home")
+        close();
+      })
+      .catch((err) => {
+        setErrMsg(err.response.data.message);
+      });
   }
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
-    <>
-      <div className={style["sideMenu"]}>
-        <div className={style["logo"]}>
-          <PostModal open={opened} handleClose={(x) => handleClose(x)}/>
+    <div>
+      <Modal
+        open={op}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+        <CloseIcon sx={{position:"absolute",top:"20px",right:"20px",fontSize:"30px",cursor:"pointer"}} onClick={handleClose}/>
           <svg
+          style={{textAlign:"center",width:"100%" , marginBottom:"40px"}}
+          className={style["svg"]}
             aria-label="Instagram"
             class="x1lliihq x1n2onr6 x5n08af"
             fill="currentColor"
-            height="29"
+            height="50"
             role="img"
             viewBox="32 4 113 32"
-            width="103"
+            width="150"
           >
             <title>Instagram</title>
             <path
@@ -31,41 +90,54 @@ function SideMenu() {
               fill-rule="evenodd"
             ></path>
           </svg>
-        </div>
-        <ul>
-          <li>
-            <i class="fa-solid fa-house"></i> <span>Home</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-magnifying-glass"></i> <span>Search</span>
-          </li>
-          <li>
-            <i class="fa-regular fa-compass"></i> <span>Explore</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-clapperboard"></i> <span>Reels</span>
-          </li>
-          <li>
-            <i class="fa-brands fa-facebook-messenger"></i>{" "}
-            <span>Messages</span>
-          </li>
-          <li>
-            <i class="fa-regular fa-heart"></i> <span>Notifaction</span>
-          </li>
-          <li onClick={()=>{setOpened(true)}}>
-            <i class="fa-solid fa-plus"></i> <span>create</span>
-          </li>
-          <li>
-            <img src={profile} /> <span>Profile</span>
-          </li>
-        </ul>
-        <div className={style["more"]}>
-          <i class="fa-solid fa-bars"></i>
-          <span>More</span>
-        </div>
-      </div>
-    </>
+          <TextField
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            sx={{
+              marginBottom: "5px",
+              border: "1px solid rgb(211, 211, 211)",
+              width: "100%",
+              borderRadius: "3px",
+            }}
+            label="Phone number, username, or email"
+            variant="filled"
+            size="small"
+          />
+          <TextField
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            type={showPassword ? "text" : "password"}
+            sx={{
+              width: "100%",
+              border: "1px solid rgb(211, 211, 211)",
+              borderRadius: "3px",
+            }}
+            label="Password"
+            variant="filled"
+            size="small"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    sx={{ marginTop: "10px" }}
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <h4 className={style["login"]} onClick={login}>Log in</h4>
+          {errMsg && <p className={style["error"]}>{errMsg}</p>}
+        </Box>
+      </Modal>
+    </div>
   );
 }
 
-export default SideMenu;
+export default SwitchModal;

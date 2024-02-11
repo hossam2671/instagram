@@ -2,29 +2,57 @@ import React, { useEffect, useState } from "react";
 import phone from "../assets/home-phones.png";
 import photo1 from "../assets/screenshot1.png";
 import photo2 from "../assets/screenshot4.png";
-import TextField from '@mui/material/TextField';
-import style from './Login.module.css'
-import google from '../assets/google.png'
-import microsoft from '../assets/microsoft.png'
+import TextField from "@mui/material/TextField";
+import style from "./Login.module.css";
+import google from "../assets/google.png";
+import microsoft from "../assets/microsoft.png";
 import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Login() {
-    const [img, setImage] = useState(photo1)
-    const navigate = useNavigate();
-    useEffect(()=>{
-        const intervalId = setInterval(() => {
-            setImage((prevImg) => (prevImg === photo1 ? photo2 : photo1));
-          }, 1000);
-      
-          return () => clearInterval(intervalId);
-    },[img])
+  const [img, setImage] = useState(photo1);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setImage((prevImg) => (prevImg === photo1 ? photo2 : photo1));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [img]);
+
+  function login() {
+    axios
+      .post("http://localhost:5000/auth/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        localStorage.setItem("user",res.data._id)
+        navigate("/home")
+      })
+      .catch((err) => {
+        setErrMsg(err.response.data.message);
+      });
+  }
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div className={style["login"]}>
       <div className={style["mainContent"]}>
         <div className={style["imgs"]}>
           <img src={phone} />
-          <img src={img}  />
+          <img src={img} />
         </div>
         <div className={style["log"]}>
           <div className={style["fields"]}>
@@ -45,16 +73,64 @@ function Login() {
                 fill-rule="evenodd"
               ></path>
             </svg>
-            <TextField sx={{marginBottom:"5px", border:"1px solid rgb(211, 211, 211)", width:"100%", borderRadius:"3px"}} label="Phone number, username, or email" variant="filled" size="small"/>
-            <TextField sx={{width:"100%", border:"1px solid rgb(211, 211, 211)", borderRadius:"3px"}} label="Password" variant="filled" size="small"/>
-            <h4>Log in</h4>
+            <TextField
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              sx={{
+                marginBottom: "5px",
+                border: "1px solid rgb(211, 211, 211)",
+                width: "100%",
+                borderRadius: "3px",
+              }}
+              label="Phone number, username, or email"
+              variant="filled"
+              size="small"
+            />
+            <TextField
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              type={showPassword ? "text" : "password"}
+              sx={{
+                width: "100%",
+                border: "1px solid rgb(211, 211, 211)",
+                borderRadius: "3px",
+              }}
+              label="Password"
+              variant="filled"
+              size="small"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      sx={{ marginTop: "10px" }}
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                      aria-label="toggle password visibility"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <h4 onClick={login}>Log in</h4>
             <h6>OR</h6>
+            {errMsg && <p>{errMsg}</p>}
             <h5>Forgot password?</h5>
           </div>
           <div className={style["signUp"]}>
-            <h4>Don't have an account? <span onClick={()=>{
-              navigate("/signUp");
-            }}>Sign up</span></h4>
+            <h4>
+              Don't have an account?{" "}
+              <span
+                onClick={() => {
+                  navigate("/signUp");
+                }}
+              >
+                Sign up
+              </span>
+            </h4>
           </div>
           <h6>Get the app.</h6>
           <div className={style["app"]}>
