@@ -39,23 +39,46 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function PostModal({ open: op, handleClose: close }) {
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = React.useState(null);
-
+  const [selectedImageView, setSelectedImageView] = React.useState("");
+  const [user, setUser] = React.useState({});
+  const [content, setContent] = React.useState("");
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.currentTarget.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setSelectedImage(file);
+      setSelectedImageView(URL.createObjectURL(file));
     }
   };
 
   const handleClose = (x) => {
     close(x);
-    setSelectedImage(null)
+    setSelectedImage(null);
   };
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:5000/user/getUser", {
+        params: { id: localStorage.getItem("user") },
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        navigate("/login");
+      });
+  }, []);
+
+  function post(){
+    const formData = new FormData()
+    formData.append("img",selectedImage)
+    formData.append("content",content)
+    formData.append("user",localStorage.getItem("user"))
+    console.log(selectedImage)
+    axios.post("http://localhost:5000/user/addPost",formData).then((res)=>{
+      handleClose()
+    })
+  }
 
   return (
     <div className={style["postModal"]}>
@@ -72,22 +95,24 @@ function PostModal({ open: op, handleClose: close }) {
             width: selectedImage ? "860px" : "520px",
           }}
         >
-          {/* <CloseIcon
-            sx={{
-              position: "absolute",
-              top: "20px",
-              right: "20px",
-              fontSize: "30px",
-              cursor: "pointer",
+          <div
+            style={{
+              marginBottom: selectedImage ? "10px" : "50%",
+              justifyContent: selectedImage ? "space-between" : "center",
             }}
-            onClick={handleClose}
-          /> */}
-          <h4
             className={style["header"]}
-            style={{ marginBottom: selectedImage ? "10px" : "50%" }}
           >
-            Create new post
-          </h4>
+            {selectedImage && (
+              <i
+                onClick={() => {
+                  setSelectedImage(null);
+                }}
+                class="fa-solid fa-arrow-left"
+              ></i>
+            )}
+            <h4>Create new post</h4>
+            {selectedImage && <h5 onClick={post}>Share</h5>}
+          </div>
           {!selectedImage && (
             <Button
               sx={{
@@ -100,25 +125,28 @@ function PostModal({ open: op, handleClose: close }) {
               variant="contained"
             >
               Select from computer
-              <VisuallyHiddenInput type="file" onChange={handleImageChange} />
+              <VisuallyHiddenInput name="img" type="file" onChange={handleImageChange} />
             </Button>
           )}
           {selectedImage && (
             <div className={style["select"]}>
               <div className={style["img"]}>
-                <img src={selectedImage} />
+                <img src={selectedImageView} />
               </div>
               <div className={style["text"]}>
                 <div className={style["textHeader"]}>
-                  <img src={profile} />
-                  <h4>hhhhh hhhhh</h4>
+                  <img src={`http://localhost:5000/${user.img}`} />
+                  <h4>{user.userName}</h4>
                 </div>
                 <TextField
-                multiline
-                rows={10}
-                placeholder="Write a caption"
+                  onChange={(e) => {
+                    setContent(e.target.value);
+                  }}
+                  multiline
+                  rows={10}
+                  placeholder="Write a caption"
                   sx={{
-                    width:"90%",
+                    width: "90%",
                     "& .MuiOutlinedInput-root": {
                       border: "none",
                     },

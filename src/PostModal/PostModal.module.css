@@ -1,8 +1,22 @@
 .header{
-    text-align: center;
+    display: flex;
+    align-items: center;
     margin-top: 10px;
-    font-weight: 500;
+    padding: 0 15px;
     position: relative;
+}
+.header i{
+    font-size: 22px;
+    cursor: pointer;
+}
+.header h4{
+    text-align: center;
+    font-weight: 500;
+}
+.header h5{
+    font-weight: 500;
+    color: #38a3f6;
+    cursor: pointer;
 }
 .header::after{
     content: "";
