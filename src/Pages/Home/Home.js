@@ -4,29 +4,29 @@ import Post from "./Post/Post";
 import style from "./Home.module.css";
 import Suggest from "./Suggest/Suggest";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setPost } from "../../Redux/Slices/Posts";
 
 function Home() {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.PostSlice);
   useEffect(() => {
     axios
       .get("http://localhost:5000/user/getPost", {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
-        setPosts(res.data);
+        dispatch(setPost(res.data));
       });
   }, []);
   return (
     <>
       <div style={{ display: "flex" }}>
-        <SideMenu />
+        <SideMenu onclose />
         <div className={style["posts"]}>
           {posts.map((post) => (
-            <Post key={post._id} post={post}/>
+            <Post key={post._id} post={post} />
           ))}
-          {/* <Post />
-          
-          <Post /> */}
         </div>
         <Suggest />
       </div>

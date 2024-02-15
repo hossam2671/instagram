@@ -63,6 +63,9 @@
     margin-top: 12px;
     margin-bottom: 6px;
 }
+.post .likes h5{
+    cursor: pointer;
+}
 .post .content h4{
     color: #101010;
 }

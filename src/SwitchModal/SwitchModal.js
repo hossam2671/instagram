@@ -1,7 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import style from "./SwitchModal.module.css";
@@ -11,7 +9,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch } from "react-redux";
+import { setPost } from "../Redux/Slices/Posts";
 
 const modalStyle = {
   position: "absolute",
@@ -21,26 +21,20 @@ const modalStyle = {
   width: 450,
   bgcolor: "background.paper",
   boxShadow: 24,
-  padding:"100px 70px 40px",
-  borderRadius:"12px"
+  padding: "100px 70px 40px",
+  borderRadius: "12px",
 };
 
 function SwitchModal({ open: op, handleClose: close }) {
-  const [open, setOpen] = React.useState(false);
-  //   const handleOpen = () => setOpen(true);
-//   const handleClose = () => setOpen(false);
-const handleClose = (x) => {
+  const dispatch = useDispatch();
+  const handleClose = (x) => {
     close(x);
-  };
-  const handleOpen = () => {
-    setOpen(true);
   };
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [errMsg, setErrMsg] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
-  
 
   function login() {
     axios
@@ -49,9 +43,17 @@ const handleClose = (x) => {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem("user",res.data._id)
-        navigate("/home")
+        localStorage.setItem("user", res.data._id);
+        navigate("/home");
         close();
+        setErrMsg("");
+        axios
+          .get("http://localhost:5000/user/getPost", {
+            params: { id: res.data._id },
+          })
+          .then((result) => {
+            dispatch(setPost(result.data));
+          });
       })
       .catch((err) => {
         setErrMsg(err.response.data.message);
@@ -70,10 +72,19 @@ const handleClose = (x) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-        <CloseIcon sx={{position:"absolute",top:"20px",right:"20px",fontSize:"30px",cursor:"pointer"}} onClick={handleClose}/>
+          <CloseIcon
+            sx={{
+              position: "absolute",
+              top: "20px",
+              right: "20px",
+              fontSize: "30px",
+              cursor: "pointer",
+            }}
+            onClick={handleClose}
+          />
           <svg
-          style={{textAlign:"center",width:"100%" , marginBottom:"40px"}}
-          className={style["svg"]}
+            style={{ textAlign: "center", width: "100%", marginBottom: "40px" }}
+            className={style["svg"]}
             aria-label="Instagram"
             class="x1lliihq x1n2onr6 x5n08af"
             fill="currentColor"
@@ -132,7 +143,9 @@ const handleClose = (x) => {
               ),
             }}
           />
-          <h4 className={style["login"]} onClick={login}>Log in</h4>
+          <h4 className={style["login"]} onClick={login}>
+            Log in
+          </h4>
           {errMsg && <p className={style["error"]}>{errMsg}</p>}
         </Box>
       </Modal>

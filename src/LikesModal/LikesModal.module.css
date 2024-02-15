@@ -1,0 +1,21 @@
+.head{
+    display: flex;
+    margin-left: 40%;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    position: relative;
+}
+.head::after{
+    position: absolute;
+    content: "";
+    width: 166%;
+    height: 1px;
+    right: 0;
+    bottom: -10px;
+    background-color: #dcdcdc;
+}
+.content{
+    height: 350px;
+    overflow-Y: scroll;
+}

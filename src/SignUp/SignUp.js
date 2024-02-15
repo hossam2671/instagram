@@ -87,19 +87,29 @@ function SignUp() {
             variant="filled"
             size="small"
             onKeyUp={(e) => {
-              if (emailRegex.test(e.target.value) || phoneRegex.test(e.target.value)) {
-                axios.post("http://localhost:5000/auth/checkEmail",{email:e.target.value}).then((res) => {
-                  console.log(res)
-                  setTrueEmail(false);
-                  let arr = theErrors;
-                  arr.push("enter a valid email or phone");
-                  setTheErrors(arr);
-                }).catch((error) => {
-                  setTrueEmail(true);
-                  setTheErrors((errors) =>
-                    errors.filter((error) => error !== "enter a valid email or phone")
-                  );
-                });
+              if (
+                emailRegex.test(e.target.value) ||
+                phoneRegex.test(e.target.value)
+              ) {
+                axios
+                  .post("http://localhost:5000/auth/checkEmail", {
+                    email: e.target.value,
+                  })
+                  .then((res) => {
+                    console.log(res);
+                    setTrueEmail(false);
+                    let arr = theErrors;
+                    arr.push("enter a valid email or phone");
+                    setTheErrors(arr);
+                  })
+                  .catch((error) => {
+                    setTrueEmail(true);
+                    setTheErrors((errors) =>
+                      errors.filter(
+                        (error) => error !== "enter a valid email or phone"
+                      )
+                    );
+                  });
               } else {
                 setTrueEmail(false);
                 let arr = theErrors;
@@ -108,7 +118,6 @@ function SignUp() {
                 setTheErrors(arr);
               }
             }}
-            
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

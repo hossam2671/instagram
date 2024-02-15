@@ -1,0 +1,32 @@
+.like{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 0 20px;
+}
+.like .info{
+    display: flex;
+    align-items: center;
+}
+.like .info img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.like .info h4{
+    font-weight: 500;
+    font-size: 14px;
+}
+.like .info h4:last-of-type{
+    color: #7B7B7B;
+}
+.like > h5{
+    background-color: #1877F2;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+}

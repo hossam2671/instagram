@@ -1,20 +1,14 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import style from "./PostModal.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import profile from "../assets/119986446_3340727139310180_8618841474764541280_n.jpg";
+import { useDispatch } from "react-redux";
+import { setPost } from "../Redux/Slices/Posts";
 
 const modalStyle = {
   position: "absolute",
@@ -40,6 +34,7 @@ const VisuallyHiddenInput = styled("input")({
 
 function PostModal({ open: op, handleClose: close }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = React.useState(null);
   const [selectedImageView, setSelectedImageView] = React.useState("");
   const [user, setUser] = React.useState({});
@@ -69,15 +64,22 @@ function PostModal({ open: op, handleClose: close }) {
       });
   }, []);
 
-  function post(){
-    const formData = new FormData()
-    formData.append("img",selectedImage)
-    formData.append("content",content)
-    formData.append("user",localStorage.getItem("user"))
-    console.log(selectedImage)
-    axios.post("http://localhost:5000/user/addPost",formData).then((res)=>{
-      handleClose()
-    })
+  function post() {
+    const formData = new FormData();
+    formData.append("img", selectedImage);
+    formData.append("content", content);
+    formData.append("user", localStorage.getItem("user"));
+    console.log(selectedImage);
+    axios.post("http://localhost:5000/user/addPost", formData).then((res) => {
+      handleClose();
+      axios
+        .get("http://localhost:5000/user/getPost", {
+          params: { id: localStorage.getItem("user") },
+        })
+        .then((res) => {
+          dispatch(setPost(res.data));
+        });
+    });
   }
 
   return (
@@ -125,7 +127,11 @@ function PostModal({ open: op, handleClose: close }) {
               variant="contained"
             >
               Select from computer
-              <VisuallyHiddenInput name="img" type="file" onChange={handleImageChange} />
+              <VisuallyHiddenInput
+                name="img"
+                type="file"
+                onChange={handleImageChange}
+              />
             </Button>
           )}
           {selectedImage && (

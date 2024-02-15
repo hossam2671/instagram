@@ -4,16 +4,16 @@ import style from "./SideMenu.module.css";
 import PostModal from "../PostModal/PostModal";
 
 function SideMenu() {
-  const [opened,setOpened] = useState(false)
+  const [opened, setOpened] = useState(false);
 
   const handleClose = (x) => {
     setOpened(false);
-  }
+  };
   return (
     <>
       <div className={style["sideMenu"]}>
         <div className={style["logo"]}>
-          <PostModal open={opened} handleClose={(x) => handleClose(x)}/>
+          <PostModal open={opened} handleClose={(x) => handleClose(x)} />
           <svg
             aria-label="Instagram"
             class="x1lliihq x1n2onr6 x5n08af"
@@ -52,7 +52,11 @@ function SideMenu() {
           <li>
             <i class="fa-regular fa-heart"></i> <span>Notifaction</span>
           </li>
-          <li onClick={()=>{setOpened(true)}}>
+          <li
+            onClick={() => {
+              setOpened(true);
+            }}
+          >
             <i class="fa-solid fa-plus"></i> <span>create</span>
           </li>
           <li>

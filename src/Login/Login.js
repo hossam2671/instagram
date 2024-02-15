@@ -25,7 +25,6 @@ function Login() {
     const intervalId = setInterval(() => {
       setImage((prevImg) => (prevImg === photo1 ? photo2 : photo1));
     }, 1000);
-
     return () => clearInterval(intervalId);
   }, [img]);
 
@@ -36,8 +35,8 @@ function Login() {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem("user",res.data._id)
-        navigate("/home")
+        localStorage.setItem("user", res.data._id);
+        navigate("/home");
       })
       .catch((err) => {
         setErrMsg(err.response.data.message);
