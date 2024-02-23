@@ -19,6 +19,23 @@ function Like({ id }) {
         setFollowed(true);
       }
     });
+
+    function follow(){
+        axios.put("http://localhost:5000/user/follow",{
+            follower:localStorage.getItem("user"),
+            following:id
+        }).then((res)=>{
+            setFollowed(true)
+        })
+    }
+    function unfollow(){
+        axios.put("http://localhost:5000/user/unfollow",{
+            follower:localStorage.getItem("user"),
+            following:id
+        }).then((res)=>{
+            setFollowed(false)
+        })
+    }
   return (
     <div className={style["like"]}>
       <div className={style["info"]}>
@@ -29,11 +46,11 @@ function Like({ id }) {
         </div>
       </div>
       {followed ? (
-        <h5 style={{ color: "black", backgroundColor: "#EFEFEF" }}>
+        <h5 onClick={unfollow} style={{ color: "black", backgroundColor: "#EFEFEF" }}>
           Following
         </h5>
       ) : (
-        <h5>Follow</h5>
+        <h5 onClick={follow}>Follow</h5>
       )}
     </div>
   );

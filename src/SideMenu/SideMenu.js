@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import profile from "../assets/119986446_3340727139310180_8618841474764541280_n.jpg";
 import style from "./SideMenu.module.css";
 import PostModal from "../PostModal/PostModal";
+import { useNavigate } from "react-router-dom";
 
 function SideMenu() {
+  const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
 
   const handleClose = (x) => {
@@ -33,13 +35,17 @@ function SideMenu() {
           </svg>
         </div>
         <ul>
-          <li>
+          <li onClick={()=>{
+            navigate("/home")
+          }}>
             <i class="fa-solid fa-house"></i> <span>Home</span>
           </li>
           <li>
             <i class="fa-solid fa-magnifying-glass"></i> <span>Search</span>
           </li>
-          <li>
+          <li onClick={()=>{
+            navigate("/explore")
+          }}>
             <i class="fa-regular fa-compass"></i> <span>Explore</span>
           </li>
           <li>

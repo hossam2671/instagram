@@ -1,0 +1,9 @@
+.posts {
+  width: 90%;
+  padding-left: 27%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 300px;
+  grid-gap: 4px;
+  padding-top: 25px;
+}
