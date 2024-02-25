@@ -28,6 +28,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
   const [thePost, setThePost] = React.useState(post);
   const [liked, setLiked] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
   const dispatch = useDispatch();
   const handleClose = (x) => {
     close(x);
@@ -42,6 +43,17 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
       setLiked(false);
     }
     getPost();
+    axios
+      .get("http://localhost:5000/user/getUser", { params: { id: localStorage.getItem("user") } })
+      .then((res) => {
+        if(res.data.saved.includes(post._id)){
+          setSaved(true)
+        }
+        else{
+          setSaved(false)
+        }
+      });
+
   }, [op]);
 
   function addComment() {
@@ -100,11 +112,22 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
       });
   }
   function save() {
-    console.log("j");
     axios.put("http://localhost:5000/user/save", {
       user: localStorage.getItem("user"),
       post: post._id,
-    });
+    }).then((res)=>{
+      getPost()
+      setSaved(true)
+    })
+  }
+  function unsave() {
+    axios.put("http://localhost:5000/user/unsave", {
+      user: localStorage.getItem("user"),
+      post: post._id,
+    }).then((res)=>{
+      setSaved(false)
+      getPost()
+    })
   }
 
   return (
@@ -167,7 +190,12 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
                   <i class="fa-regular fa-comment"></i>
                   <i class="fa-regular fa-share-from-square"></i>
                 </div>
-                <i onClick={save} class="fa-regular fa-bookmark"></i>
+                {saved ? (
+          <i onClick={unsave} class="fa-solid fa-bookmark"></i>
+        ) : (
+          <i onClick={save} class="fa-regular fa-bookmark"></i>
+        )}
+                
               </div>
               <div className={style["likes"]}>
                 <h5 onClick={() => setOpened(true)}>

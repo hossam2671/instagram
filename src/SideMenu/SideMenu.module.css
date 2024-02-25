@@ -8,16 +8,31 @@
     padding: 35px;
 }
 .sideMenu ul{
-    padding: 10px 30px 140px;
+    padding: 10px 0 140px;
     list-style: none;
     display: flex;
     flex-direction: column;
 }
 .sideMenu ul li{
-    margin-bottom: 30px;
+    padding: 15px 12px;
+    margin: 0 3px;
     display: flex;
     align-items: center;
     cursor: pointer;
+    position: relative;
+}
+.sideMenu ul li::after{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 8px;
+}
+.sideMenu ul li:hover::after{
+    background-color: rgba(0, 0, 0, 0.095);
 }
 .sideMenu ul li i {
     width: 35px;

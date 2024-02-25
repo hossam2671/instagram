@@ -24,9 +24,12 @@ function Home() {
       <div style={{ display: "flex" }}>
         <SideMenu onclose />
         <div className={style["posts"]}>
-          {posts.map((post) => (
+          {
+            posts.length > 0 ?
+          (posts.map((post) => (
             <Post key={post._id} post={post} />
-          ))}
+          ))):<h4>There are no posts to show</h4>
+          }
         </div>
         <Suggest />
       </div>

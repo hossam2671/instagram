@@ -4,7 +4,7 @@
     position: relative;
     cursor: pointer;
 }
-.img::after{
+.img img::after{
     position: absolute;
     content: "";
     width: 100%;
@@ -28,7 +28,6 @@
     display: flex;
     align-items: center;
     transform: translateX(-50%) translateY(-50%);
-    /* transform: translateY(-50%); */
 }
 .img .icons .likes{
     display: flex;

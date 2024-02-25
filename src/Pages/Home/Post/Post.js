@@ -26,6 +26,7 @@ function Post({ post }) {
 
   const handleClose = (x) => {
     setOpened(false);
+    getPost()
   };
 
   function addComment() {
