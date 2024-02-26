@@ -1,0 +1,21 @@
+.list ul{
+    list-style: none;
+    text-align: center;
+}
+.list ul li{
+    margin: 30px 0;
+    position: relative;
+    cursor: pointer;
+}
+.list ul li:first-of-type{
+    color: #ee5763;
+}
+.list ul li:not(:last-of-type)::after{
+    position: absolute;
+    width: 100%;
+    content: "";
+    height: 1px;
+    left: 0;
+    bottom: -15px;
+    background-color: #e4e4e4;
+}

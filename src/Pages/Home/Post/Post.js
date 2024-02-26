@@ -7,6 +7,7 @@ import PostDetails from "../../../PostDetails/PostDetails";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../../Redux/Slices/Posts";
+import OptionsModal from "../../../OptionsModal/OptionsModal";
 
 function Post({ post }) {
   const [user, setUser] = useState({});
@@ -16,6 +17,7 @@ function Post({ post }) {
   const [opened, setOpened] = useState(false);
   const [date, setDate] = useState("");
   const [opened2, setOpened2] = useState(false);
+  const [opened3, setOpened3] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
 
@@ -26,6 +28,10 @@ function Post({ post }) {
 
   const handleClose = (x) => {
     setOpened(false);
+    getPost()
+  };
+  const handleClose3 = (x) => {
+    setOpened3(false);
     getPost()
   };
 
@@ -162,13 +168,18 @@ function Post({ post }) {
         user={user}
         date={date}
       />
+      <OptionsModal
+        open={opened3}
+        handleClose={(x) => handleClose3(x)}
+        post={thePost}
+        user={user}/>
       <div className={style["head"]}>
         <div className={style["info"]}>
           <img src={`http://localhost:5000/${user.img}`} />
           <h4>{user.userName}</h4>
           <h5>{date}</h5>
         </div>
-        <i class="fa-solid fa-ellipsis"></i>
+        <i onClick={()=>setOpened3(true)} class="fa-solid fa-ellipsis"></i>
       </div>
       <div className={style["img"]}>
         <img src={`http://localhost:5000/${post.img}`} />
