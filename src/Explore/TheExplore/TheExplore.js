@@ -17,9 +17,9 @@ function TheExplore({ post }) {
       .then((res) => {
         setUser(res.data);
       });
-      const timeDifference = new Date() - new Date(post.date);
-        const convertedDifference = convertTimeDifference(timeDifference);
-        setDate(convertedDifference);
+    const timeDifference = new Date() - new Date(post.date);
+    const convertedDifference = convertTimeDifference(timeDifference);
+    setDate(convertedDifference);
   }, []);
 
   function convertTimeDifference(milliseconds) {
@@ -43,7 +43,7 @@ function TheExplore({ post }) {
     return years + "y";
   }
   return (
-    <div className={style["img"]} >
+    <div className={style["img"]}>
       <PostDetails
         open={opened}
         handleClose={(x) => handleClose(x)}
@@ -51,7 +51,9 @@ function TheExplore({ post }) {
         user={user}
         date={date}
       />
-      <img onClick={()=>setOpened(true)} src={`http://localhost:5000/${post.img}`} alt="Post" />
+      <div onClick={() => setOpened(true)} className={style["theImg"]}>
+        <img src={`http://localhost:5000/${post.img}`} alt="Post" />
+      </div>
       <div className={style["icons"]}>
         <div className={style["likes"]}>
           <h4>{post.likes?.length}</h4>

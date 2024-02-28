@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Store } from "./Redux/Store";
 import { Provider } from "react-redux";
 import Explore from "./Explore/Explore";
+import SuggestedPage from "./SuggestedPage/SuggestedPage";
 function App() {
   return (
     <Provider store={Store}>
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<Login />} path="/login" />
           <Route index element={<SignUp />} path="/signup" />
           <Route index element={<Explore />} path="/explore" />
+          <Route index element={<SuggestedPage />} path="/suggested" />
         </Routes>
       </BrowserRouter>
     </Provider>

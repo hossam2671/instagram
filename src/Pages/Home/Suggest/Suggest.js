@@ -55,7 +55,7 @@ function Suggest() {
       </div>
       <div className={style["suggestedForYou"]}>
         <h4>Suggested for you</h4>
-        <h5>See All</h5>
+        <h5 onClick={()=>navigate("/suggested")}>See All</h5>
       </div>
       <div className={style["suggestions"]}>
         {suggested.slice(0, 5).map((suggest) => (
