@@ -1,4 +1,9 @@
-.content{
-    width: 40%;
-    margin-left: 40% ;
+.content {
+  width: 35%;
+  margin-left: 38%;
+  padding-top: 80px;
+}
+.content h4 {
+  font-weight: 600;
+  margin-bottom: 10px;
 }

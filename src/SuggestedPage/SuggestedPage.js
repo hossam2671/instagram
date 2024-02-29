@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SideMenu from "../SideMenu/SideMenu";
 import style from "./SuggestedPage.module.css";
-import Suggestion from "../Pages/Home/Suggest/Suggestion/Suggestion";
+import suggedted from "./Suggested/Suggested";
 import axios from "axios";
+import Suggested from "./Suggested/Suggested";
 
 function SuggestedPage() {
   const [suggested, setSuggested] = useState([]);
@@ -21,11 +22,12 @@ function SuggestedPage() {
       <div className={style["content"]}>
         <h4>Suggested</h4>
         {suggested.slice(0, 5).map((suggest) => (
-          <Suggestion
+          <Suggested
             key={suggest._id}
-            name={suggest.userName}
+            name={suggest.name}
             id={suggest._id}
             img={suggest.img}
+            userName={suggest.userName}
           />
         ))}
       </div>

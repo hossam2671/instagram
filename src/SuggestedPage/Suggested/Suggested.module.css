@@ -1,0 +1,38 @@
+.suggest {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+.suggest .info{
+    display: flex;
+    align-items: center;
+}
+.suggest .info img{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.suggest .info .name h5{
+    font-weight: 600;
+    font-size: 14px;
+    color: #202020;
+}
+.suggest .info .name h5:nth-of-type(2){
+    color: #777777;
+}
+.suggest .info .name h5:last-of-type{
+    color: #8b8b8b;
+    font-size: 13px;
+    font-weight: normal;
+}
+.suggest > h5{
+    font-weight: 600;
+    font-size: 14px;
+    background-color: #179ff7;
+    cursor: pointer;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 8px;
+}
