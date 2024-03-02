@@ -1,0 +1,38 @@
+.content img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+.content h4{
+    text-align: center;
+    font-weight: normal;
+    margin-bottom: 40px;
+}
+.content ul{
+    list-style: none;
+    text-align: center;
+}
+.content ul li{
+    margin-bottom: 20px;
+    font-weight: normal;
+    position: relative;
+    cursor: pointer;
+}
+.content ul li:first-of-type{
+    margin-bottom: 30px;
+    color: #ee5461;
+    font-weight: 500;
+}
+.content ul li::after{
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    left: 0;
+    top: -15px;
+    background-color: #eaeaea;
+}

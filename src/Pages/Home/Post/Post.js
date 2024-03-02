@@ -8,6 +8,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../../Redux/Slices/Posts";
 import OptionsModal from "../../../OptionsModal/OptionsModal";
+import UnfollowModal from "../../../UnfollowModal/UnfollowModal";
 
 function Post({ post }) {
   const [user, setUser] = useState({});
@@ -18,6 +19,7 @@ function Post({ post }) {
   const [date, setDate] = useState("");
   const [opened2, setOpened2] = useState(false);
   const [opened3, setOpened3] = useState(false);
+  const [opened4, setOpened4] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
 
@@ -28,12 +30,19 @@ function Post({ post }) {
 
   const handleClose = (x) => {
     setOpened(false);
-    getPost()
+    getPost();
   };
   const handleClose3 = (x) => {
     setOpened3(false);
-    getPost()
+    getPost();
   };
+  const handleClose4 = (x) => {
+    setOpened4(false);
+    getPost();
+  };
+  function UnfollowModalOpen() {
+    setOpened4(true);
+  }
 
   function addComment() {
     if (comment) {
@@ -92,6 +101,13 @@ function Post({ post }) {
           setLiked(false);
         }
       });
+    axios
+      .get("http://localhost:5000/user/getPost", {
+        params: { id: localStorage.getItem("user") },
+      })
+      .then((res) => {
+        dispatch(setPost(res.data));
+      });
   }
   useEffect(() => {
     getPost();
@@ -101,13 +117,14 @@ function Post({ post }) {
         setUser(res.data);
       });
     axios
-      .get("http://localhost:5000/user/getUser", { params: { id: localStorage.getItem("user") } })
+      .get("http://localhost:5000/user/getUser", {
+        params: { id: localStorage.getItem("user") },
+      })
       .then((res) => {
-        if(res.data.saved.includes(post._id)){
-          setSaved(true)
-        }
-        else{
-          setSaved(false)
+        if (res.data.saved.includes(post._id)) {
+          setSaved(true);
+        } else {
+          setSaved(false);
         }
       });
   }, []);
@@ -138,21 +155,27 @@ function Post({ post }) {
 
   function save() {
     console.log("j");
-    axios.put("http://localhost:5000/user/save", {
-      user: localStorage.getItem("user"),
-      post: post._id,
-    }).then((res)=>{
-      setSaved(true)
-    })
+    axios
+      .put("http://localhost:5000/user/save", {
+        user: localStorage.getItem("user"),
+        post: post._id,
+      })
+      .then((res) => {
+        setSaved(true);
+        getPost()
+      });
   }
   function unsave() {
     console.log("j");
-    axios.put("http://localhost:5000/user/unsave", {
-      user: localStorage.getItem("user"),
-      post: post._id,
-    }).then((res)=>{
-      setSaved(false)
-    })
+    axios
+      .put("http://localhost:5000/user/unsave", {
+        user: localStorage.getItem("user"),
+        post: post._id,
+      })
+      .then((res) => {
+        setSaved(false);
+        getPost()
+      });
   }
   return (
     <div className={style["post"]}>
@@ -172,14 +195,22 @@ function Post({ post }) {
         open={opened3}
         handleClose={(x) => handleClose3(x)}
         post={thePost}
-        user={user}/>
+        openUnfollowModal={() => setOpened4(true)}
+        user={user}
+      />
+
+      <UnfollowModal
+        open={opened4}
+        handleClose={(x) => handleClose4(x)}
+        user={user}
+      />
       <div className={style["head"]}>
         <div className={style["info"]}>
           <img src={`http://localhost:5000/${user.img}`} />
           <h4>{user.userName}</h4>
           <h5>{date}</h5>
         </div>
-        <i onClick={()=>setOpened3(true)} class="fa-solid fa-ellipsis"></i>
+        <i onClick={() => setOpened3(true)} class="fa-solid fa-ellipsis"></i>
       </div>
       <div className={style["img"]}>
         <img src={`http://localhost:5000/${post.img}`} />

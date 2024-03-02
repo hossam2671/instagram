@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import style from "./Suggestion.module.css";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setPost } from "../../../../Redux/Slices/Posts";
 
 function Suggestion({ name, id, img }) {
+  const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
 
   axios.get("http://localhost:5000/user/getUser", {
@@ -13,6 +16,15 @@ function Suggestion({ name, id, img }) {
         setFollowed(true);
       }
     });
+    function getPost(){
+      axios
+    .get("http://localhost:5000/user/getPost", {
+      params: { id: localStorage.getItem("user") },
+    })
+    .then((res) => {
+      dispatch(setPost(res.data));
+    });
+  }
 
     function follow(){
       axios.put("http://localhost:5000/user/follow",{
@@ -20,6 +32,7 @@ function Suggestion({ name, id, img }) {
           following:id
       }).then((res)=>{
           setFollowed(true)
+          getPost()
       })
   }
   function unfollow(){
@@ -28,6 +41,7 @@ function Suggestion({ name, id, img }) {
           following:id
       }).then((res)=>{
           setFollowed(false)
+          getPost()
       })
   }
   return (

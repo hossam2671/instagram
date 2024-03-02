@@ -21,7 +21,7 @@ function SuggestedPage() {
       <SideMenu />
       <div className={style["content"]}>
         <h4>Suggested</h4>
-        {suggested.slice(0, 5).map((suggest) => (
+        {suggested.slice(0, 30).map((suggest) => (
           <Suggested
             key={suggest._id}
             name={suggest.name}
@@ -30,6 +30,7 @@ function SuggestedPage() {
             userName={suggest.userName}
           />
         ))}
+        
       </div>
     </div>
   );
