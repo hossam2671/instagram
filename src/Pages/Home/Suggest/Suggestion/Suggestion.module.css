@@ -3,12 +3,23 @@
     justify-content: space-between;
     align-items: center;
     margin: 20px 0;
+    position: relative;
 }
 .suggest .info{
     display: flex;
     align-items: center;
 }
-.suggest .info img{
+.suggest .info .userDetails{
+    position: absolute;
+    bottom: -345px;
+    width: 120%;
+    left: 10px;
+    background-color: white;
+    z-index: 100;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 12px;
+}
+.suggest .info > img{
     width: 45px;
     height: 45px;
     border-radius: 50%;

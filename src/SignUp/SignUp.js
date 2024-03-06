@@ -96,7 +96,6 @@ function SignUp() {
                     email: e.target.value,
                   })
                   .then((res) => {
-                    console.log(res);
                     setTrueEmail(false);
                     let arr = theErrors;
                     arr.push("enter a valid email or phone");
@@ -113,7 +112,6 @@ function SignUp() {
               } else {
                 setTrueEmail(false);
                 let arr = theErrors;
-                console.log(arr);
                 arr.push("enter a valid email or phone");
                 setTheErrors(arr);
               }

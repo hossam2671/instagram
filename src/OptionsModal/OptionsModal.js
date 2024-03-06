@@ -41,7 +41,6 @@ function OptionsModal({
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
-        console.log(res.data.saved);
         if (res.data.saved.includes(post._id)) {
           setSaved(true);
         } else {

@@ -69,7 +69,6 @@ function PostModal({ open: op, handleClose: close }) {
     formData.append("img", selectedImage);
     formData.append("content", content);
     formData.append("user", localStorage.getItem("user"));
-    console.log(selectedImage);
     axios.post("http://localhost:5000/user/addPost", formData).then((res) => {
       handleClose();
       axios

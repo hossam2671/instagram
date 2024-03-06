@@ -64,6 +64,7 @@ function Suggest() {
             name={suggest.userName}
             id={suggest._id}
             img={suggest.img}
+            user={suggest}
           />
         ))}
       </div>

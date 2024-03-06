@@ -28,6 +28,7 @@ function SuggestedPage() {
             id={suggest._id}
             img={suggest.img}
             userName={suggest.userName}
+            user={suggest}
           />
         ))}
         

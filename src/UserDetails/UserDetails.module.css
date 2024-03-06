@@ -1,0 +1,89 @@
+.userDetails{
+    padding: 15px 0;
+}
+.userDetails .userHeader{
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+.userDetails .userHeader img{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.userDetails .userHeader h3{
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.userDetails .userHeader h3:last-of-type{
+    color: #9a9a9a;
+}
+.userDetails .userNumbers{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    padding: 0 40px;
+    margin-bottom: 40px;
+}
+.userDetails .userNumbers .userNumber{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: normal;
+    color: rgb(37, 37, 37);
+}
+.userDetails .userNumbers .userNumber h4:first-of-type{
+    font-size: 14px;
+}
+.userDetails .userPosts{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1px;
+}
+.userDetails .userPosts img{
+    width: 32%;
+    cursor: pointer;
+}
+.userDetails .noPosts{
+    padding: 0 15px;
+    text-align: center;
+    position: relative;
+}
+.userDetails .noPosts::after{
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    left: 0;
+    top: -20px;
+    background-color: #c3c3c3;
+}
+.userDetails .noPosts i{
+    color: #e01365;
+    font-size: 25px;
+    border-radius: 50%;
+    padding: 15px;
+    border: 1px solid #e01365;
+}
+.userDetails .noPosts h3{
+    font-size: 16px;
+    font-weight: 500;
+}
+.userDetails .noPosts p{
+    padding: 0 5px;
+    font-size: 14px;
+}
+.userDetails > h5{
+    background-color: #179ff7;
+    text-align: center;
+    margin: 20px 15px 0 15px;
+    padding: 5px 0;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}

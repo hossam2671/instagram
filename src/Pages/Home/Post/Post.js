@@ -160,7 +160,6 @@ function Post({ post }) {
   }
 
   function save() {
-    console.log("j");
     axios
       .put("http://localhost:5000/user/save", {
         user: localStorage.getItem("user"),
@@ -172,7 +171,6 @@ function Post({ post }) {
       });
   }
   function unsave() {
-    console.log("j");
     axios
       .put("http://localhost:5000/user/unsave", {
         user: localStorage.getItem("user"),

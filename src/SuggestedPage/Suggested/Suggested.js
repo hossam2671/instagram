@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import axios from "axios";
 import style from './Suggested.module.css'
+import UserDetails from '../../UserDetails/UserDetails';
 
-function Suggested({ name, id, img , userName }) {
+function Suggested({ name, id, img , userName , user }) {
     const [followed, setFollowed] = useState(false);
     const [following, setFollowing] = useState(false);
 
