@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../../Redux/Slices/Posts";
 import OptionsModal from "../../../OptionsModal/OptionsModal";
 import UnfollowModal from "../../../UnfollowModal/UnfollowModal";
+import AboutModal from "../../../AboutModal/AboutModal";
 
 function Post({ post }) {
   const [user, setUser] = useState({});
@@ -20,6 +21,7 @@ function Post({ post }) {
   const [opened2, setOpened2] = useState(false);
   const [opened3, setOpened3] = useState(false);
   const [opened4, setOpened4] = useState(false);
+  const [opened5, setOpened5] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
 
@@ -38,6 +40,10 @@ function Post({ post }) {
   };
   const handleClose4 = (x) => {
     setOpened4(false);
+    getPost();
+  };
+  const handleClose5 = (x) => {
+    setOpened5(false);
     getPost();
   };
   function UnfollowModalOpen() {
@@ -127,7 +133,7 @@ function Post({ post }) {
           setSaved(false);
         }
       });
-  }, []);
+  }, [opened4]);
 
   function like() {
     axios
@@ -162,7 +168,7 @@ function Post({ post }) {
       })
       .then((res) => {
         setSaved(true);
-        getPost()
+        getPost();
       });
   }
   function unsave() {
@@ -174,7 +180,7 @@ function Post({ post }) {
       })
       .then((res) => {
         setSaved(false);
-        getPost()
+        getPost();
       });
   }
   return (
@@ -196,12 +202,18 @@ function Post({ post }) {
         handleClose={(x) => handleClose3(x)}
         post={thePost}
         openUnfollowModal={() => setOpened4(true)}
+        openAboutModal ={() => setOpened5(true)}
         user={user}
       />
 
       <UnfollowModal
         open={opened4}
         handleClose={(x) => handleClose4(x)}
+        user={user}
+      />
+      <AboutModal
+        open={opened5}
+        handleClose={(x) => handleClose5(x)}
         user={user}
       />
       <div className={style["head"]}>

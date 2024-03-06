@@ -23,6 +23,7 @@ function OptionsModal({
   post,
   user,
   openUnfollowModal,
+  openAboutModal,
 }) {
   const dispatch = useDispatch();
   const [opened, setOpened] = useState(false);
@@ -36,14 +37,15 @@ function OptionsModal({
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getUser", { params: { id: localStorage.getItem("user") } })
+      .get("http://localhost:5000/user/getUser", {
+        params: { id: localStorage.getItem("user") },
+      })
       .then((res) => {
-        console.log(res.data.saved)
-        if(res.data.saved.includes(post._id)){
-          setSaved(true)
-        }
-        else{
-          setSaved(false)
+        console.log(res.data.saved);
+        if (res.data.saved.includes(post._id)) {
+          setSaved(true);
+        } else {
+          setSaved(false);
         }
       });
   }, [op]);
@@ -100,14 +102,20 @@ function OptionsModal({
               >
                 Unfollow
               </li>
-              {
-                saved ? 
+              {saved ? (
                 <li onClick={unSave}>Remove from favourites</li>
-                :
-              <li onClick={save}>Add to favourites</li>
-              }
+              ) : (
+                <li onClick={save}>Add to favourites</li>
+              )}
               <li>Go to post</li>
-              <li>About this account</li>
+              <li
+                onClick={() => {
+                  close();
+                  openAboutModal();
+                }}
+              >
+                About this account
+              </li>
               <li>Cancel</li>
             </ul>
           ) : (
