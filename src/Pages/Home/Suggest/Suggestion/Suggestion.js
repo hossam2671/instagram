@@ -25,8 +25,16 @@ function Suggestion({ name, id, img, user }) {
       params: { id: localStorage.getItem("user") },
     })
     .then((res) => {
-      if (res.data.follwing.includes(id)) {
-        setFollowed(true);
+      let found = false;
+      for (let i = 0; i < res.data.follwing.length; i++) {
+        if (res.data.follwing[i]?._id === id) {
+          setFollowed(true);
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        setFollowed(false);
       }
     });
   function getPost() {

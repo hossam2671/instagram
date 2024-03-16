@@ -15,27 +15,39 @@ function Like({ id }) {
       params: { id: localStorage.getItem("user") },
     })
     .then((res) => {
-      if (res.data.follwing.includes(id)) {
-        setFollowed(true);
+      let found = false;
+      for (let i = 0; i < res.data.follwing.length; i++) {
+        if (res.data.follwing[i]?._id === id) {
+          setFollowed(true);
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        setFollowed(false);
       }
     });
 
-    function follow(){
-        axios.put("http://localhost:5000/user/follow",{
-            follower:localStorage.getItem("user"),
-            following:id
-        }).then((res)=>{
-            setFollowed(true)
-        })
-    }
-    function unfollow(){
-        axios.put("http://localhost:5000/user/unfollow",{
-            follower:localStorage.getItem("user"),
-            following:id
-        }).then((res)=>{
-            setFollowed(false)
-        })
-    }
+  function follow() {
+    axios
+      .put("http://localhost:5000/user/follow", {
+        follower: localStorage.getItem("user"),
+        following: id,
+      })
+      .then((res) => {
+        setFollowed(true);
+      });
+  }
+  function unfollow() {
+    axios
+      .put("http://localhost:5000/user/unfollow", {
+        follower: localStorage.getItem("user"),
+        following: id,
+      })
+      .then((res) => {
+        setFollowed(false);
+      });
+  }
   return (
     <div className={style["like"]}>
       <div className={style["info"]}>
@@ -46,7 +58,10 @@ function Like({ id }) {
         </div>
       </div>
       {followed ? (
-        <h5 onClick={unfollow} style={{ color: "black", backgroundColor: "#EFEFEF" }}>
+        <h5
+          onClick={unfollow}
+          style={{ color: "black", backgroundColor: "#EFEFEF" }}
+        >
           Following
         </h5>
       ) : (

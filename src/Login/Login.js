@@ -22,6 +22,9 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
+    if(localStorage.getItem("user")){
+      navigate("/home");
+    }
     const intervalId = setInterval(() => {
       setImage((prevImg) => (prevImg === photo1 ? photo2 : photo1));
     }, 1000);
