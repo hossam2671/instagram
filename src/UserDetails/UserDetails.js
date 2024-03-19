@@ -7,7 +7,9 @@ import { setPost } from "../Redux/Slices/Posts";
 function UserDetails({ user }) {
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
+  const [mine, setMine] = useState(false);
   useEffect(() => {
+    user._id === localStorage.getItem("user") ? setMine(true) : setMine(false);
     axios
       .get("http://localhost:5000/user/getUser", {
         params: { id: localStorage.getItem("user") },
@@ -103,7 +105,11 @@ function UserDetails({ user }) {
           </div>
         )}
       </div>
-      {followed ? (
+      {mine ? (
+        <h5 style={{ backgroundColor: "#d5d3d3", color: "black" }}>
+          Edit Profile
+        </h5>
+      ) : followed ? (
         <h5
           onClick={unfollow}
           style={{ backgroundColor: "#d5d3d3", color: "black" }}

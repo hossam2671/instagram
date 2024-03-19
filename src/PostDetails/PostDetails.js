@@ -11,6 +11,7 @@ import Comment from "../Comment/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../Redux/Slices/Posts";
 import LikesModal from "../LikesModal/LikesModal";
+import UserDetails from "../UserDetails/UserDetails";
 
 const modalStyle = {
   position: "absolute",
@@ -29,6 +30,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
   const [liked, setLiked] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
+  const [showUserDetails, setShowUserDetails] = React.useState(false);
   const dispatch = useDispatch();
   const handleClose = (x) => {
     close(x);
@@ -44,16 +46,16 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
     }
     getPost();
     axios
-      .get("http://localhost:5000/user/getUser", { params: { id: localStorage.getItem("user") } })
+      .get("http://localhost:5000/user/getUser", {
+        params: { id: localStorage.getItem("user") },
+      })
       .then((res) => {
-        if(res.data.saved.includes(post._id)){
-          setSaved(true)
-        }
-        else{
-          setSaved(false)
+        if (res.data.saved.includes(post._id)) {
+          setSaved(true);
+        } else {
+          setSaved(false);
         }
       });
-
   }, [op]);
 
   function addComment() {
@@ -112,22 +114,26 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
       });
   }
   function save() {
-    axios.put("http://localhost:5000/user/save", {
-      user: localStorage.getItem("user"),
-      post: post._id,
-    }).then((res)=>{
-      getPost()
-      setSaved(true)
-    })
+    axios
+      .put("http://localhost:5000/user/save", {
+        user: localStorage.getItem("user"),
+        post: post._id,
+      })
+      .then((res) => {
+        getPost();
+        setSaved(true);
+      });
   }
   function unsave() {
-    axios.put("http://localhost:5000/user/unsave", {
-      user: localStorage.getItem("user"),
-      post: post._id,
-    }).then((res)=>{
-      setSaved(false)
-      getPost()
-    })
+    axios
+      .put("http://localhost:5000/user/unsave", {
+        user: localStorage.getItem("user"),
+        post: post._id,
+      })
+      .then((res) => {
+        setSaved(false);
+        getPost();
+      });
   }
 
   return (
@@ -144,6 +150,15 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
             handleClose={(x) => handleClose2(x)}
             likes={thePost?.likes}
           />
+          {showUserDetails && (
+            <div
+              onMouseEnter={() => setShowUserDetails(true)}
+              onMouseLeave={() => setShowUserDetails(false)}
+              className={style["userDetails"]}
+            >
+              <UserDetails user={user} />
+            </div>
+          )}
           <div className={style["postDetails"]}>
             <div className={style["img"]}>
               <img src={`http://localhost:5000/${post.img}`} />
@@ -151,8 +166,17 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
             <div className={style["post"]}>
               <div className={style["head"]}>
                 <div className={style["user"]}>
-                  <img src={`http://localhost:5000/${user.img}`} />
-                  <h4>{user.userName}</h4>
+                  <img
+                    onMouseEnter={() => setShowUserDetails(true)}
+                    onMouseLeave={() => setShowUserDetails(false)}
+                    src={`http://localhost:5000/${user.img}`}
+                  />
+                  <h4
+                    onMouseEnter={() => setShowUserDetails(true)}
+                    onMouseLeave={() => setShowUserDetails(false)}
+                  >
+                    {user.userName}
+                  </h4>
                 </div>
                 <i class="fa-solid fa-ellipsis"></i>
               </div>
@@ -169,10 +193,10 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
                 <div className={style["comments"]}>
                   {thePost
                     ? thePost?.comments?.map((comment) => (
-                        <Comment key={comment} user={user} comment={comment} />
+                        <Comment key={comment._id} user={user} comment={comment} />
                       ))
                     : post?.comments?.map((comment) => (
-                        <Comment key={comment} user={user} comment={comment} />
+                        <Comment key={comment._id} user={user} comment={comment} />
                       ))}
                 </div>
               </div>
@@ -191,11 +215,10 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
                   <i class="fa-regular fa-share-from-square"></i>
                 </div>
                 {saved ? (
-          <i onClick={unsave} class="fa-solid fa-bookmark"></i>
-        ) : (
-          <i onClick={save} class="fa-regular fa-bookmark"></i>
-        )}
-                
+                  <i onClick={unsave} class="fa-solid fa-bookmark"></i>
+                ) : (
+                  <i onClick={save} class="fa-regular fa-bookmark"></i>
+                )}
               </div>
               <div className={style["likes"]}>
                 <h5 onClick={() => setOpened(true)}>

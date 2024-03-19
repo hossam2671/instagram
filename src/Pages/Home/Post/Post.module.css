@@ -1,5 +1,16 @@
 .post{
     margin-bottom: 25px;
+    position: relative;
+}
+.post .userDetails{
+    position: absolute;
+    bottom: 20px;
+    width: 80%;
+    left: 10px;
+    background-color: white;
+    z-index: 100;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 15px 45px;
+    border-radius: 12px;
 }
 .post .head{
     display: flex;
@@ -21,6 +32,7 @@
     margin-right: 20px;
     color: #0f0f0f;
     position: relative;
+    cursor: pointer;
 }
 .post .head .info h4::after{
     position: absolute;

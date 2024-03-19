@@ -10,6 +10,7 @@ import { setPost } from "../../../Redux/Slices/Posts";
 import OptionsModal from "../../../OptionsModal/OptionsModal";
 import UnfollowModal from "../../../UnfollowModal/UnfollowModal";
 import AboutModal from "../../../AboutModal/AboutModal";
+import UserDetails from "../../../UserDetails/UserDetails";
 
 function Post({ post }) {
   const [user, setUser] = useState({});
@@ -23,6 +24,7 @@ function Post({ post }) {
   const [opened4, setOpened4] = useState(false);
   const [opened5, setOpened5] = useState(false);
   const [comment, setComment] = useState("");
+  const [showUserDetails, setShowUserDetails] = useState(false);
   const dispatch = useDispatch();
 
   const handleClose2 = (x) => {
@@ -200,7 +202,7 @@ function Post({ post }) {
         handleClose={(x) => handleClose3(x)}
         post={thePost}
         openUnfollowModal={() => setOpened4(true)}
-        openAboutModal ={() => setOpened5(true)}
+        openAboutModal={() => setOpened5(true)}
         user={user}
       />
 
@@ -214,15 +216,33 @@ function Post({ post }) {
         handleClose={(x) => handleClose5(x)}
         user={user}
       />
+      {showUserDetails && (
+        <div
+          onMouseEnter={() => setShowUserDetails(true)}
+          onMouseLeave={() => setShowUserDetails(false)}
+          className={style["userDetails"]}
+        >
+          <UserDetails user={user} />
+        </div>
+      )}
       <div className={style["head"]}>
         <div className={style["info"]}>
-          <img src={`http://localhost:5000/${user.img}`} />
-          <h4>{user.userName}</h4>
+          <img
+            onMouseEnter={() => setShowUserDetails(true)}
+            onMouseLeave={() => setShowUserDetails(false)}
+            src={`http://localhost:5000/${user.img}`}
+          />
+          <h4
+            onMouseEnter={() => setShowUserDetails(true)}
+            onMouseLeave={() => setShowUserDetails(false)}
+          >
+            {user.userName}
+          </h4>
           <h5>{date}</h5>
         </div>
         <i onClick={() => setOpened3(true)} class="fa-solid fa-ellipsis"></i>
       </div>
-      <div className={style["img"]}>
+      <div onDoubleClick={like} className={style["img"]}>
         <img src={`http://localhost:5000/${post.img}`} />
       </div>
       <div className={style["icons"]}>

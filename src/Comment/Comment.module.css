@@ -1,3 +1,13 @@
+.userDetails{
+    position: absolute;
+    bottom: 0px;
+    width: 35%;
+    left: 640px;
+    background-color: white;
+    z-index: 100;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 15px 45px;
+    border-radius: 12px;
+}
 .comment{
     display: flex;
     justify-content: space-between;
