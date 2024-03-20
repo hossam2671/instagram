@@ -34,6 +34,15 @@ function OptionsModal({
   const handleClose2 = (x) => {
     setOpened(false);
   };
+  function deletePost(){
+    axios.delete("http://localhost:5000/user/delete",{params:{
+      post:post._id,
+      user:user._id
+    }}).then((res)=>{
+      getPost()
+      close()
+    })
+  }
 
   useEffect(() => {
     axios
@@ -41,7 +50,7 @@ function OptionsModal({
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
-        if (res.data.saved.includes(post._id)) {
+        if (res.data.saved.includes(post?._id)) {
           setSaved(true);
         } else {
           setSaved(false);
@@ -55,6 +64,7 @@ function OptionsModal({
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
+        console.log(res.data)
         dispatch(setPost(res.data));
       });
   }
@@ -115,15 +125,14 @@ function OptionsModal({
               >
                 About this account
               </li>
-              <li>Cancel</li>
+              <li onClick={close}>Cancel</li>
             </ul>
           ) : (
             <ul>
-              <li>هنشوف بعدين</li>
-              <li>هنشوف بعدين</li>
-              <li>هنشوف بعدين</li>
-              <li>هنشوف بعدين</li>
-              <li>هنشوف بعدين</li>
+              <li onClick={deletePost}>Delete</li>
+              <li>Edit</li>
+              <li>Go to post</li>
+              <li onClick={close}>Cancel</li>
             </ul>
           )}
         </Box>

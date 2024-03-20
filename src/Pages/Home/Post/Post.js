@@ -100,9 +100,9 @@ function Post({ post }) {
       })
       .then((res) => {
         setThePost(res.data);
-        const timeDifference = new Date() - new Date(res.data.date);
-        const convertedDifference = convertTimeDifference(timeDifference);
-        setDate(convertedDifference);
+        // const timeDifference = new Date() - new Date(res.data.date);
+        // const convertedDifference = convertTimeDifference(timeDifference);
+        // setDate(convertedDifference);
         if (res.data.likes.includes(localStorage.getItem("user"))) {
           setLiked(true);
         } else {
@@ -135,7 +135,7 @@ function Post({ post }) {
           setSaved(false);
         }
       });
-  }, [opened4]);
+  }, [opened4, opened3 , opened2]);
 
   function like() {
     axios

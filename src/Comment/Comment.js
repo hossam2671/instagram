@@ -53,7 +53,7 @@ function Comment({ user, comment }) {
       });
   }
   return (
-    <div>
+    <div style={{position:"relative"}}>
       <LikesModal
         open={opened}
         handleClose={(x) => handleClose(x)}

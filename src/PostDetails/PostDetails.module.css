@@ -16,7 +16,7 @@
     height: 100%;
     max-width: 55%;
 }
-.postDetails img{
+.postDetails .img img{
     height: 700px;
     max-width: 100%;
 }
@@ -54,6 +54,9 @@
     font-weight: 500;
     color: #161616;
     font-size: 16px;
+}
+.postDetails .post .head i{
+    cursor: pointer;
 }
 .postDetails .scroll{
     height: 500px;

@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../Redux/Slices/Posts";
 import LikesModal from "../LikesModal/LikesModal";
 import UserDetails from "../UserDetails/UserDetails";
+import OptionsModal from "../OptionsModal/OptionsModal";
+import UnfollowModal from "../UnfollowModal/UnfollowModal";
+import AboutModal from "../AboutModal/AboutModal";
 
 const modalStyle = {
   position: "absolute",
@@ -31,12 +34,27 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
   const [opened, setOpened] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
   const [showUserDetails, setShowUserDetails] = React.useState(false);
+  const [opened3, setOpened3] = React.useState(false);
+  const [opened4, setOpened4] = React.useState(false);
+  const [opened5, setOpened5] = React.useState(false);
   const dispatch = useDispatch();
   const handleClose = (x) => {
     close(x);
   };
   const handleClose2 = (x) => {
     setOpened(false);
+  };
+  const handleClose3 = (x) => {
+    setOpened3(false);
+    getPost();
+  };
+  const handleClose4 = (x) => {
+    setOpened4(false);
+    getPost();
+  };
+  const handleClose5 = (x) => {
+    setOpened5(false);
+    getPost();
   };
   React.useEffect(() => {
     if (post?.likes?.includes(localStorage.getItem("user"))) {
@@ -56,7 +74,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
           setSaved(false);
         }
       });
-  }, [op]);
+  }, [op , opened3 , opened4]);
 
   function addComment() {
     if (comment) {
@@ -150,6 +168,25 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
             handleClose={(x) => handleClose2(x)}
             likes={thePost?.likes}
           />
+          <OptionsModal
+            open={opened3}
+            handleClose={(x) => handleClose3(x)}
+            post={thePost}
+            openUnfollowModal={() => setOpened4(true)}
+            openAboutModal={() => setOpened5(true)}
+            user={user}
+          />
+
+          <UnfollowModal
+            open={opened4}
+            handleClose={(x) => handleClose4(x)}
+            user={user}
+          />
+          <AboutModal
+            open={opened5}
+            handleClose={(x) => handleClose5(x)}
+            user={user}
+          />
           {showUserDetails && (
             <div
               onMouseEnter={() => setShowUserDetails(true)}
@@ -178,7 +215,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
                     {user.userName}
                   </h4>
                 </div>
-                <i class="fa-solid fa-ellipsis"></i>
+                <i onClick={() => setOpened3(true)} class="fa-solid fa-ellipsis"></i>
               </div>
               <div className={style["scroll"]}>
                 <div className={style["content"]}>
@@ -193,10 +230,18 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
                 <div className={style["comments"]}>
                   {thePost
                     ? thePost?.comments?.map((comment) => (
-                        <Comment key={comment._id} user={user} comment={comment} />
+                        <Comment
+                          key={comment._id}
+                          user={user}
+                          comment={comment}
+                        />
                       ))
                     : post?.comments?.map((comment) => (
-                        <Comment key={comment._id} user={user} comment={comment} />
+                        <Comment
+                          key={comment._id}
+                          user={user}
+                          comment={comment}
+                        />
                       ))}
                 </div>
               </div>

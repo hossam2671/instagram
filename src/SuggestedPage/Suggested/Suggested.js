@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import axios from "axios";
-import style from './Suggested.module.css'
-import UserDetails from '../../UserDetails/UserDetails';
+import style from "./Suggested.module.css";
+import UserDetails from "../../UserDetails/UserDetails";
 
-function Suggested({ name, id, img , userName , user }) {
-    const [followed, setFollowed] = useState(false);
-    const [following, setFollowing] = useState(false);
+function Suggested({ name, id, img, userName, user }) {
+  const [followed, setFollowed] = useState(false);
+  const [following, setFollowing] = useState(false);
+  const [showUserDetails, setShowUserDetails] = useState(false);
 
-  axios.get("http://localhost:5000/user/getUser", {
+  axios
+    .get("http://localhost:5000/user/getUser", {
       params: { id: localStorage.getItem("user") },
     })
     .then((res) => {
@@ -19,45 +21,68 @@ function Suggested({ name, id, img , userName , user }) {
       }
     });
 
-    function follow(){
-      axios.put("http://localhost:5000/user/follow",{
-          follower:localStorage.getItem("user"),
-          following:id
-      }).then((res)=>{
-          setFollowed(true)
+  function follow() {
+    axios
+      .put("http://localhost:5000/user/follow", {
+        follower: localStorage.getItem("user"),
+        following: id,
       })
+      .then((res) => {
+        setFollowed(true);
+      });
   }
-  function unfollow(){
-      axios.put("http://localhost:5000/user/unfollow",{
-          follower:localStorage.getItem("user"),
-          following:id
-      }).then((res)=>{
-          setFollowed(false)
+  function unfollow() {
+    axios
+      .put("http://localhost:5000/user/unfollow", {
+        follower: localStorage.getItem("user"),
+        following: id,
       })
+      .then((res) => {
+        setFollowed(false);
+      });
   }
   return (
-    <div className={style["suggest"]}>
-      <div className={style["info"]}>
-        <img src={`http://localhost:5000/${img}`} />
-        <div className={style["name"]}>
-          <h5>{name}</h5>
-          <h5>{userName}</h5>
-          {
-            following ?
-            <h5>Suggested for you</h5> :
-            <h5>Follows You</h5>
-          }
+    <div style={{ position: "relative" }}>
+      {showUserDetails && (
+        <div
+          onMouseEnter={() => setShowUserDetails(true)}
+          onMouseLeave={() => setShowUserDetails(false)}
+          className={style["userDetails"]}
+        >
+          <UserDetails user={user} />
         </div>
-      </div>
-      {followed ? (
-        <h5 onClick={unfollow} style={{ backgroundColor:"#efefef", color:"black" }}>
-          Following
-        </h5>
-      ) : (
-        <h5 onClick={follow}>Follow</h5>
       )}
+      <div className={style["suggest"]}>
+        <div className={style["info"]}>
+          <img
+            onMouseEnter={() => setShowUserDetails(true)}
+            onMouseLeave={() => setShowUserDetails(false)}
+            src={`http://localhost:5000/${img}`}
+          />
+          <div className={style["name"]}>
+            <h5
+              onMouseEnter={() => setShowUserDetails(true)}
+              onMouseLeave={() => setShowUserDetails(false)}
+            >
+              {name}
+            </h5>
+            <h5>{userName}</h5>
+            {following ? <h5>Suggested for you</h5> : <h5>Follows You</h5>}
+          </div>
+        </div>
+        {followed ? (
+          <h5
+            onClick={unfollow}
+            style={{ backgroundColor: "#efefef", color: "black" }}
+          >
+            Following
+          </h5>
+        ) : (
+          <h5 onClick={follow}>Follow</h5>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
-export default Suggested
+export default Suggested;
