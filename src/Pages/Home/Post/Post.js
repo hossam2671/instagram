@@ -11,8 +11,9 @@ import OptionsModal from "../../../OptionsModal/OptionsModal";
 import UnfollowModal from "../../../UnfollowModal/UnfollowModal";
 import AboutModal from "../../../AboutModal/AboutModal";
 import UserDetails from "../../../UserDetails/UserDetails";
+import PostModal from "../../../PostModal/PostModal";
 
-function Post({ post }) {
+function Post({ post , onDeletePost }) {
   const [user, setUser] = useState({});
   const [thePost, setThePost] = useState({});
   const [liked, setLiked] = useState(false);
@@ -23,6 +24,7 @@ function Post({ post }) {
   const [opened3, setOpened3] = useState(false);
   const [opened4, setOpened4] = useState(false);
   const [opened5, setOpened5] = useState(false);
+  const [opened6, setOpened6] = useState(false);
   const [comment, setComment] = useState("");
   const [showUserDetails, setShowUserDetails] = useState(false);
   const dispatch = useDispatch();
@@ -46,6 +48,10 @@ function Post({ post }) {
   };
   const handleClose5 = (x) => {
     setOpened5(false);
+    getPost();
+  };
+  const handleClose6 = (x) => {
+    setOpened6(false);
     getPost();
   };
   function UnfollowModalOpen() {
@@ -74,6 +80,10 @@ function Post({ post }) {
     }
   }
   function convertTimeDifference(milliseconds) {
+    const seconds = Math.floor(milliseconds / 1000)
+    if (seconds < 60){
+      return seconds + " s"
+    }
     const minutes = Math.floor(milliseconds / (1000 * 60));
     if (minutes < 60) {
       return minutes + " m";
@@ -87,8 +97,9 @@ function Post({ post }) {
       return days + "d";
     }
     const months = Math.floor(days / 30);
+    console.log(months)
     if (months < 12) {
-      return months + "m";
+      return months + "mo";
     }
     const years = Math.floor(months / 12);
     return years + "y";
@@ -100,9 +111,10 @@ function Post({ post }) {
       })
       .then((res) => {
         setThePost(res.data);
-        // const timeDifference = new Date() - new Date(res.data.date);
-        // const convertedDifference = convertTimeDifference(timeDifference);
-        // setDate(convertedDifference);
+        const timeDifference = new Date() - new Date(res.data.date);
+        const convertedDifference = convertTimeDifference(timeDifference);
+        console.log(convertedDifference)
+        setDate(convertedDifference);
         if (res.data.likes.includes(localStorage.getItem("user"))) {
           setLiked(true);
         } else {
@@ -196,13 +208,21 @@ function Post({ post }) {
         post={thePost}
         user={user}
         date={date}
+        onDeletePost={onDeletePost}
       />
+      <PostModal 
+        open={opened6}
+        handleClose={(x)=> handleClose6(x)
+        }
+        />
       <OptionsModal
         open={opened3}
         handleClose={(x) => handleClose3(x)}
         post={thePost}
         openUnfollowModal={() => setOpened4(true)}
         openAboutModal={() => setOpened5(true)}
+        onDeletePost={onDeletePost}
+        openPostModal={()=> setOpened6(true)}
         user={user}
       />
 

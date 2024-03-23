@@ -13,11 +13,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} path="/home"/>
-          <Route index element={<Login />} path="/" />
-          <Route index element={<Login />} path="/login" />
-          <Route index element={<SignUp />} path="/signup" />
-          <Route index element={<Explore />} path="/explore" />
-          <Route index element={<SuggestedPage />} path="/suggested" />
+          <Route element={<Home />} path="/" />
+          <Route element={<Login />} path="/login" />
+          <Route element={<SignUp />} path="/signup" />
+          <Route element={<Explore />} path="/explore" />
+          <Route element={<SuggestedPage />} path="/suggested" />
         </Routes>
       </BrowserRouter>
     </Provider>

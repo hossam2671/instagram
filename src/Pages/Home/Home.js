@@ -10,7 +10,7 @@ import { setPost } from "../../Redux/Slices/Posts";
 function Home() {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.PostSlice);
-  useEffect(() => {
+  function getPost(){
     axios
       .get("http://localhost:5000/user/getPost", {
         params: { id: localStorage.getItem("user") },
@@ -18,6 +18,9 @@ function Home() {
       .then((res) => {
         dispatch(setPost(res.data));
       });
+  }
+  useEffect(() => {
+    getPost()
   }, []);
   return (
     <>
@@ -27,7 +30,7 @@ function Home() {
           {
             posts.length > 0 ?
           (posts.map((post) => (
-            <Post key={post._id} post={post} />
+            <Post key={post._id} post={post} onDeletePost={getPost}/>
           ))):<h4>There are no posts to show</h4>
           }
         </div>

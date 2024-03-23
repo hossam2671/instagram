@@ -27,7 +27,7 @@ const modalStyle = {
   height: "700px",
 };
 
-function PostDetails({ open: op, handleClose: close, post, user, date }) {
+function PostDetails({ open: op, handleClose: close, post, user, date , onDeletePost }) {
   const [comment, setComment] = React.useState("");
   const [thePost, setThePost] = React.useState(post);
   const [liked, setLiked] = React.useState(false);
@@ -175,6 +175,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date }) {
             openUnfollowModal={() => setOpened4(true)}
             openAboutModal={() => setOpened5(true)}
             user={user}
+            onDeletePost={onDeletePost}
           />
 
           <UnfollowModal

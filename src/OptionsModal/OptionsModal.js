@@ -6,6 +6,7 @@ import style from "./OptionsModal.module.css";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setPost } from "../Redux/Slices/Posts";
+import { useNavigate } from "react-router-dom";
 
 const modalStyle = {
   position: "absolute",
@@ -24,8 +25,11 @@ function OptionsModal({
   user,
   openUnfollowModal,
   openAboutModal,
+  onDeletePost,
+  openPostModal
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
   const [saved, setSaved] = useState(false);
   const handleClose = (x) => {
@@ -39,8 +43,7 @@ function OptionsModal({
       post:post._id,
       user:user._id
     }}).then((res)=>{
-      getPost()
-      close()
+      onDeletePost()
     })
   }
 
@@ -130,7 +133,10 @@ function OptionsModal({
           ) : (
             <ul>
               <li onClick={deletePost}>Delete</li>
-              <li>Edit</li>
+              <li onClick={()=>{
+                close()
+                openPostModal()
+              }}>Edit</li>
               <li>Go to post</li>
               <li onClick={close}>Cancel</li>
             </ul>
