@@ -212,8 +212,9 @@ function Post({ post , onDeletePost }) {
       />
       <PostModal 
         open={opened6}
-        handleClose={(x)=> handleClose6(x)
-        }
+        handleClose={(x)=> handleClose6(x) }
+        thePost={post}
+        edit = {true}
         />
       <OptionsModal
         open={opened3}
@@ -299,11 +300,14 @@ function Post({ post , onDeletePost }) {
           {thePost.likes ? thePost.likes.length : 0} likes
         </h5>
       </div>
+      {
+        post.content &&
       <div className={style["content"]}>
         <h4>
           {user.userName} <span>{post.content}</span>
         </h4>
       </div>
+      }
       <div className={style["comment"]}>
         <h4
           onClick={() => {

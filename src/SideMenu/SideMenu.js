@@ -15,7 +15,7 @@ function SideMenu() {
     <>
       <div className={style["sideMenu"]}>
         <div className={style["logo"]}>
-          <PostModal open={opened} handleClose={(x) => handleClose(x)} />
+          <PostModal open={opened} handleClose={(x) => handleClose(x)} edit={false}/>
           <svg
             aria-label="Instagram"
             class="x1lliihq x1n2onr6 x5n08af"

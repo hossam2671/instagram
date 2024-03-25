@@ -15,6 +15,7 @@ import UserDetails from "../UserDetails/UserDetails";
 import OptionsModal from "../OptionsModal/OptionsModal";
 import UnfollowModal from "../UnfollowModal/UnfollowModal";
 import AboutModal from "../AboutModal/AboutModal";
+import PostModal from "../PostModal/PostModal";
 
 const modalStyle = {
   position: "absolute",
@@ -27,7 +28,7 @@ const modalStyle = {
   height: "700px",
 };
 
-function PostDetails({ open: op, handleClose: close, post, user, date , onDeletePost }) {
+function PostDetails({ open: op, handleClose: close, post, user, date, onDeletePost }) {
   const [comment, setComment] = React.useState("");
   const [thePost, setThePost] = React.useState(post);
   const [liked, setLiked] = React.useState(false);
@@ -37,6 +38,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date , onDelete
   const [opened3, setOpened3] = React.useState(false);
   const [opened4, setOpened4] = React.useState(false);
   const [opened5, setOpened5] = React.useState(false);
+  const [opened6, setOpened6] = React.useState(false);
   const dispatch = useDispatch();
   const handleClose = (x) => {
     close(x);
@@ -54,6 +56,10 @@ function PostDetails({ open: op, handleClose: close, post, user, date , onDelete
   };
   const handleClose5 = (x) => {
     setOpened5(false);
+    getPost();
+  };
+  const handleClose6 = (x) => {
+    setOpened6(false);
     getPost();
   };
   React.useEffect(() => {
@@ -74,7 +80,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date , onDelete
           setSaved(false);
         }
       });
-  }, [op , opened3 , opened4]);
+  }, [op, opened3, opened4 , opened6]);
 
   function addComment() {
     if (comment) {
@@ -174,6 +180,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date , onDelete
             post={thePost}
             openUnfollowModal={() => setOpened4(true)}
             openAboutModal={() => setOpened5(true)}
+            openPostModal={() => setOpened6(true)}
             user={user}
             onDeletePost={onDeletePost}
           />
@@ -182,6 +189,12 @@ function PostDetails({ open: op, handleClose: close, post, user, date , onDelete
             open={opened4}
             handleClose={(x) => handleClose4(x)}
             user={user}
+          />
+          <PostModal
+            open={opened6}
+            handleClose={(x) => handleClose6(x)}
+            thePost={post}
+            edit={true}
           />
           <AboutModal
             open={opened5}
@@ -231,19 +244,19 @@ function PostDetails({ open: op, handleClose: close, post, user, date , onDelete
                 <div className={style["comments"]}>
                   {thePost
                     ? thePost?.comments?.map((comment) => (
-                        <Comment
-                          key={comment._id}
-                          user={user}
-                          comment={comment}
-                        />
-                      ))
+                      <Comment
+                        key={comment._id}
+                        user={user}
+                        comment={comment}
+                      />
+                    ))
                     : post?.comments?.map((comment) => (
-                        <Comment
-                          key={comment._id}
-                          user={user}
-                          comment={comment}
-                        />
-                      ))}
+                      <Comment
+                        key={comment._id}
+                        user={user}
+                        comment={comment}
+                      />
+                    ))}
                 </div>
               </div>
               <div className={style["icons"]}>
@@ -279,9 +292,9 @@ function PostDetails({ open: op, handleClose: close, post, user, date , onDelete
                       border: "none",
                     },
                     "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                      {
-                        border: "none",
-                      },
+                    {
+                      border: "none",
+                    },
                     "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
                     },

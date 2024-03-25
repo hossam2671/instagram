@@ -32,13 +32,14 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-function PostModal({ open: op, handleClose: close }) {
+function PostModal({ open: op, handleClose: close, thePost , edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = React.useState(null);
   const [selectedImageView, setSelectedImageView] = React.useState("");
   const [user, setUser] = React.useState({});
   const [content, setContent] = React.useState("");
+  const [edited, setEdited] = React.useState(false);
   const handleImageChange = (e) => {
     const file = e.currentTarget.files[0];
     if (file) {
@@ -64,12 +65,32 @@ function PostModal({ open: op, handleClose: close }) {
       });
   }, []);
 
+  React.useEffect(()=>{
+    setEdited(edit)
+  },[op])
+
   function post() {
     const formData = new FormData();
     formData.append("img", selectedImage);
     formData.append("content", content);
     formData.append("user", localStorage.getItem("user"));
     axios.post("http://localhost:5000/user/addPost", formData).then((res) => {
+      handleClose();
+      axios
+        .get("http://localhost:5000/user/getPost", {
+          params: { id: localStorage.getItem("user") },
+        })
+        .then((res) => {
+          dispatch(setPost(res.data));
+        });
+    });
+  }
+
+  function editPost(){
+    axios.put("http://localhost:5000/user/editPost",{
+      post:thePost._id,
+      content:content
+    }).then((res) => {
       handleClose();
       axios
         .get("http://localhost:5000/user/getPost", {
@@ -93,28 +114,28 @@ function PostModal({ open: op, handleClose: close }) {
           sx={{
             ...modalStyle,
             height: "560px",
-            width: selectedImage ? "860px" : "520px",
+            width: (selectedImage || edited) ? "860px" : "520px",
           }}
         >
           <div
             style={{
-              marginBottom: selectedImage ? "10px" : "50%",
-              justifyContent: selectedImage ? "space-between" : "center",
+              marginBottom: (selectedImage || edited) ? "10px" : "50%",
+              justifyContent: (selectedImage || edited) ? "space-between" : "center",
             }}
             className={style["header"]}
           >
-            {selectedImage && (
+            {selectedImage ? (
               <i
                 onClick={() => {
                   setSelectedImage(null);
                 }}
                 class="fa-solid fa-arrow-left"
               ></i>
-            )}
+            ) : edited ? (<h5 onClick={close} style={{color:"black"}}>Cancel</h5>):""}
             <h4>Create new post</h4>
-            {selectedImage && <h5 onClick={post}>Share</h5>}
+            {selectedImage ? <h5 onClick={post}>Share</h5> : edited ? <h5 onClick={editPost}>Done</h5> : ""}
           </div>
-          {!selectedImage && (
+          {(!selectedImage && !edited)  && (
             <Button
               sx={{
                 marginLeft: "50%",
@@ -133,10 +154,10 @@ function PostModal({ open: op, handleClose: close }) {
               />
             </Button>
           )}
-          {selectedImage && (
+          {(selectedImage || edited) && (
             <div className={style["select"]}>
               <div className={style["img"]}>
-                <img src={selectedImageView} />
+                <img src={selectedImageView?selectedImageView:`http://localhost:5000/${thePost.img}`} />
               </div>
               <div className={style["text"]}>
                 <div className={style["textHeader"]}>
