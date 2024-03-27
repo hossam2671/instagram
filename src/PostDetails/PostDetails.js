@@ -80,7 +80,8 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
           setSaved(false);
         }
       });
-  }, [op, opened3, opened4 , opened6]);
+    
+  }, [op, opened3, opened4, opened6]);
 
   function addComment() {
     if (comment) {
@@ -236,7 +237,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
                   <img src={`http://localhost:5000/${user.img}`} />
                   <div className={style["user"]}>
                     <h4>
-                      <span>{user.userName}</span> {post.content}
+                      <span>{user.userName}</span> {thePost?.content}
                     </h4>
                     <h5>{date}</h5>
                   </div>

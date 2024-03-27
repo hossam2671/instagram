@@ -1,0 +1,126 @@
+.postDetails{
+    display: flex;
+    align-items: flex-start;
+    width: 60%;
+    margin-left: 20%;
+    border: 1px solid #e3e3e3;
+    max-height: 95vh;
+    margin-top: 5vh;
+}
+.postDetails .img{
+    max-width: 60%;
+}
+.postDetails .img img{
+    height: 100%;
+    max-width: 100%;
+}
+.postDetails .post{
+    width: 50%;
+    padding: 20px 0;
+    height: 100%;
+}
+.postDetails .post .head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    position: relative;
+    padding: 0 20px;
+    margin-bottom: 10px;
+}
+.postDetails .post .head::after{
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 0.5px;
+    left: 0%;
+    bottom: -10px;
+    background-color: #e3e3e3;
+}
+.postDetails .post .head .user{
+    display: flex;
+    align-items: center;
+}
+.postDetails .post .head .user img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.postDetails .post .head .user h4{
+    font-weight: 500;
+    color: #161616;
+    font-size: 16px;
+}
+.postDetails .post .head i{
+    cursor: pointer;
+}
+.postDetails .scroll{
+    height: 370px;
+    overflow-y: scroll;
+    padding-left: 20px;
+}
+
+.postDetails .content{
+    display: flex;
+    align-items: flex-start;
+    margin-top: 15px;
+}
+.postDetails .content img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.postDetails .content .user{
+    margin-right: 20px;
+}
+.postDetails .content .user h4{
+    font-weight: normal;
+    color: #383838;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+.postDetails .content .user h4 span{
+    margin-right: 10px;
+    font-weight: 500;
+    color: #161616;
+}
+.postDetails .content .user h5{
+    font-weight: normal;
+    font-size: 12px;
+    color: #9a9a9a;
+}
+.postDetails .comments{
+    margin-top: 25px;
+}
+.postDetails .icons{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 0 20px;
+}
+.postDetails .icons i{
+    font-size: 25px;
+}
+.postDetails .icons i:hover{
+    color: rgb(125, 125, 125);
+}
+.postDetails .icons .left i{
+    margin-right: 20px;
+    cursor: pointer;
+}
+.postDetails .likes{
+    margin-top: 12px;
+    margin-bottom: 6px;
+    padding: 0 20px ;
+}
+.postDetails .likes h5{
+    cursor: pointer;
+}
+.postDetails .likes h6{
+    color: #9a9a9a;
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 4px;
+}

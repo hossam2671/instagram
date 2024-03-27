@@ -119,7 +119,7 @@ function OptionsModal({
               ) : (
                 <li onClick={save}>Add to favourites</li>
               )}
-              <li>Go to post</li>
+              <li onClick={()=> navigate(`/postPage/${post._id}`)}>Go to post</li>
               <li
                 onClick={() => {
                   close();
@@ -137,7 +137,7 @@ function OptionsModal({
                 close()
                 openPostModal()
               }}>Edit</li>
-              <li>Go to post</li>
+              <li onClick={()=> navigate(`/postPage/${post._id}`)}>Go to post</li>
               <li onClick={close}>Cancel</li>
             </ul>
           )}

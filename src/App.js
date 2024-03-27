@@ -7,6 +7,7 @@ import { Store } from "./Redux/Store";
 import { Provider } from "react-redux";
 import Explore from "./Explore/Explore";
 import SuggestedPage from "./SuggestedPage/SuggestedPage";
+import PostPage from "./PostPage/PostPage";
 function App() {
   return (
     <Provider store={Store}>
@@ -18,6 +19,7 @@ function App() {
           <Route element={<SignUp />} path="/signup" />
           <Route element={<Explore />} path="/explore" />
           <Route element={<SuggestedPage />} path="/suggested" />
+          <Route element={<PostPage />} path="/postPage/:id" />
         </Routes>
       </BrowserRouter>
     </Provider>
