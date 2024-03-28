@@ -27,8 +27,8 @@ function PostPage() {
   const [opened5, setOpened5] = useState(false);
   const [opened6, setOpened6] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [date,setDate] = useState("")
-  const [comment, setComment] = useState("")
+  const [date, setDate] = useState("");
+  const [comment, setComment] = useState("");
 
   const handleClose2 = (x) => {
     setOpened(false);
@@ -51,9 +51,9 @@ function PostPage() {
   };
 
   function convertTimeDifference(milliseconds) {
-    const seconds = Math.floor(milliseconds / 1000)
-    if (seconds < 60){
-      return seconds + " s"
+    const seconds = Math.floor(milliseconds / 1000);
+    if (seconds < 60) {
+      return seconds + " s";
     }
     const minutes = Math.floor(milliseconds / (1000 * 60));
     if (minutes < 60) {
@@ -68,7 +68,7 @@ function PostPage() {
       return days + "d";
     }
     const months = Math.floor(days / 30);
-    console.log(months)
+    console.log(months);
     if (months < 12) {
       return months + "mo";
     }
@@ -85,7 +85,7 @@ function PostPage() {
         setPost(res.data);
         const timeDifference = new Date() - new Date(res.data.date);
         const convertedDifference = convertTimeDifference(timeDifference);
-        console.log(convertedDifference)
+        console.log(convertedDifference);
         setDate(convertedDifference);
         if (res.data.likes.includes(localStorage.getItem("user"))) {
           setLiked(true);
@@ -94,11 +94,14 @@ function PostPage() {
         }
         axios
           .get("http://localhost:5000/user/getUser", {
-            params: { id: res.data.user},
+            params: { id: res.data.user },
           })
           .then((result) => {
-            console.log(result)
+            console.log(result);
             setUser(result.data);
+            axios.get("http://localhost:5000/user/getTopPosts", {
+              params: { id: result.data._id },
+            });
           });
       });
   }
@@ -184,44 +187,41 @@ function PostPage() {
           setSaved(false);
         }
       });
-      axios.get("http://localhost:5000/user/getTopPosts",{
-        params:{id : user._id}
-      })
   }, []);
   return (
     <>
       <SideMenu />
       <LikesModal
-            open={opened}
-            handleClose={(x) => handleClose2(x)}
-            likes={post?.likes}
-          />
-          <OptionsModal
-            open={opened3}
-            handleClose={(x) => handleClose3(x)}
-            post={post}
-            openUnfollowModal={() => setOpened4(true)}
-            openAboutModal={() => setOpened5(true)}
-            openPostModal={() => setOpened6(true)}
-            user={user}
-          />
+        open={opened}
+        handleClose={(x) => handleClose2(x)}
+        likes={post?.likes}
+      />
+      <OptionsModal
+        open={opened3}
+        handleClose={(x) => handleClose3(x)}
+        post={post}
+        openUnfollowModal={() => setOpened4(true)}
+        openAboutModal={() => setOpened5(true)}
+        openPostModal={() => setOpened6(true)}
+        user={user}
+      />
 
-          <UnfollowModal
-            open={opened4}
-            handleClose={(x) => handleClose4(x)}
-            user={user}
-          />
-          <PostModal
-            open={opened6}
-            handleClose={(x) => handleClose6(x)}
-            thePost={post}
-            edit={true}
-          />
-          <AboutModal
-            open={opened5}
-            handleClose={(x) => handleClose5(x)}
-            user={user}
-          />
+      <UnfollowModal
+        open={opened4}
+        handleClose={(x) => handleClose4(x)}
+        user={user}
+      />
+      <PostModal
+        open={opened6}
+        handleClose={(x) => handleClose6(x)}
+        thePost={post}
+        edit={true}
+      />
+      <AboutModal
+        open={opened5}
+        handleClose={(x) => handleClose5(x)}
+        user={user}
+      />
       <div className={style["postDetails"]}>
         <div className={style["img"]}>
           <img src={`http://localhost:5000/${post.img}`} />
@@ -291,9 +291,55 @@ function PostPage() {
               {post?.likes ? post?.likes.length : 0} likes
             </h5>
             <h6>{date}</h6>
-           
+          </div>
+          <div className={style["textField"]}>
+          <img src={`http://localhost:5000/${user?.img}`} />
+          <TextField
+                  placeholder="Add a comment"
+                  sx={{
+                    width: "100%",
+                    "& .MuiOutlinedInput-root": {
+                      border: "none",
+                    },
+                    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: "none",
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: "none",
+                    },
+                  }}
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={comment}
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <h4
+                          onClick={addComment}
+                          style={{
+                            fontSize: "14px",
+                            color: comment
+                              ? "rgb(16 125 227)"
+                              : "rgb(16 125 227 / 26%)",
+                            fontWeight: "normal",
+                            cursor: comment ? "pointer" : "",
+                          }}
+                        >
+                          Post
+                        </h4>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
           </div>
         </div>
+      </div>
+      <div className={style["userPosts"]}>
+        <h3>More Posts From <span> {user.userName} </span></h3>
       </div>
     </>
   );
