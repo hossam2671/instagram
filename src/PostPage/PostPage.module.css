@@ -145,7 +145,7 @@
     height: 1px;
     left: 0;
     top: -50px;
-    background-color: black;
+    background-color: #e3e3e3;
     content: "";
 }
 .userPosts h3{
@@ -155,4 +155,9 @@
 }
 .userPosts h3 span{
     color: black;
+}
+.posts{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px
 }

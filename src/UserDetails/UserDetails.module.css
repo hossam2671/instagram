@@ -1,5 +1,6 @@
 .userDetails{
     padding: 15px 0;
+    z-index: 10000;
 }
 .userDetails .userHeader{
     display: flex;

@@ -13,6 +13,7 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../Redux/Slices/Posts";
+import PostInPostPage from "./PostInPostPage/PostInPostPage";
 
 function PostPage() {
   const { id } = useParams();
@@ -29,6 +30,7 @@ function PostPage() {
   const [liked, setLiked] = useState(false);
   const [date, setDate] = useState("");
   const [comment, setComment] = useState("");
+  const [topPosts, setTopPosts] = useState([]);
 
   const handleClose2 = (x) => {
     setOpened(false);
@@ -99,9 +101,13 @@ function PostPage() {
           .then((result) => {
             console.log(result);
             setUser(result.data);
-            axios.get("http://localhost:5000/user/getTopPosts", {
-              params: { id: result.data._id },
-            });
+            axios
+              .get("http://localhost:5000/user/getTopPosts", {
+                params: { id: result.data._id },
+              })
+              .then((resu) => {
+                setTopPosts(resu.data);
+              });
           });
       });
   }
@@ -187,7 +193,7 @@ function PostPage() {
           setSaved(false);
         }
       });
-  }, []);
+  }, [id]);
   return (
     <>
       <SideMenu />
@@ -293,54 +299,63 @@ function PostPage() {
             <h6>{date}</h6>
           </div>
           <div className={style["textField"]}>
-          <img src={`http://localhost:5000/${user?.img}`} />
-          <TextField
-                  placeholder="Add a comment"
-                  sx={{
-                    width: "100%",
-                    "& .MuiOutlinedInput-root": {
-                      border: "none",
-                    },
-                    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                    {
-                      border: "none",
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      border: "none",
-                    },
-                  }}
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={comment}
-                  onChange={(e) => {
-                    setComment(e.target.value);
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <h4
-                          onClick={addComment}
-                          style={{
-                            fontSize: "14px",
-                            color: comment
-                              ? "rgb(16 125 227)"
-                              : "rgb(16 125 227 / 26%)",
-                            fontWeight: "normal",
-                            cursor: comment ? "pointer" : "",
-                          }}
-                        >
-                          Post
-                        </h4>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+            <img src={`http://localhost:5000/${user?.img}`} />
+            <TextField
+              placeholder="Add a comment"
+              sx={{
+                width: "100%",
+                "& .MuiOutlinedInput-root": {
+                  border: "none",
+                },
+                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                  {
+                    border: "none",
+                  },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
+              }}
+              id="outlined-basic"
+              variant="outlined"
+              value={comment}
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <h4
+                      onClick={addComment}
+                      style={{
+                        fontSize: "14px",
+                        color: comment
+                          ? "rgb(16 125 227)"
+                          : "rgb(16 125 227 / 26%)",
+                        fontWeight: "normal",
+                        cursor: comment ? "pointer" : "",
+                      }}
+                    >
+                      Post
+                    </h4>
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
         </div>
       </div>
-      <div className={style["userPosts"]}>
-        <h3>More Posts From <span> {user.userName} </span></h3>
-      </div>
+      {topPosts.length > 0 && (
+        <div className={style["userPosts"]}>
+          <h3>
+            More Posts From <span> {user.userName} </span>
+          </h3>
+          <div className={style["posts"]}>
+            {topPosts.slice(0, 5).map((post) => (
+              <PostInPostPage post={post} key={post._id} />
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }
