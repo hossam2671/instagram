@@ -350,9 +350,12 @@ function PostPage() {
             More Posts From <span> {user.userName} </span>
           </h3>
           <div className={style["posts"]}>
-            {topPosts.slice(0, 5).map((post) => (
-              <PostInPostPage post={post} key={post._id} />
-            ))}
+            {topPosts
+              .filter((post) => post._id !== id)
+              .slice(0, 5)
+              .map((post) => (
+                <PostInPostPage post={post} key={post._id} />
+              ))}
           </div>
         </div>
       )}

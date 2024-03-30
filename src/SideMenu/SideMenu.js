@@ -3,10 +3,12 @@ import profile from "../assets/119986446_3340727139310180_8618841474764541280_n.
 import style from "./SideMenu.module.css";
 import PostModal from "../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
+import MoreMenu from "../MoreMenu/MoreMenu";
 
 function SideMenu() {
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
+  const [moreMenu, setMoreMenu] = useState(false);
 
   const handleClose = (x) => {
     setOpened(false);
@@ -14,6 +16,9 @@ function SideMenu() {
   return (
     <>
       <div className={style["sideMenu"]}>
+        {
+          moreMenu && <div className={style["moreMenu"]}> <MoreMenu /> </div>
+        }
         <div className={style["logo"]}>
           <PostModal open={opened} handleClose={(x) => handleClose(x)} edit={false}/>
           <svg
@@ -69,7 +74,7 @@ function SideMenu() {
             <img src={profile} /> <span>Profile</span>
           </li>
         </ul>
-        <div className={style["more"]}>
+        <div onClick={()=>setMoreMenu(true)} className={style["more"]}>
           <i class="fa-solid fa-bars"></i>
           <span>More</span>
         </div>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import style from "./OptionsModal.module.css";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setPost } from "../Redux/Slices/Posts";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const modalStyle = {
   position: "absolute",
@@ -26,25 +26,27 @@ function OptionsModal({
   openUnfollowModal,
   openAboutModal,
   onDeletePost,
-  openPostModal
+  openPostModal,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [opened, setOpened] = useState(false);
+  const location = useLocation();
+  const currentUrl = location.pathname;
   const [saved, setSaved] = useState(false);
   const handleClose = (x) => {
     close(x);
   };
-  const handleClose2 = (x) => {
-    setOpened(false);
-  };
-  function deletePost(){
-    axios.delete("http://localhost:5000/user/delete",{params:{
-      post:post._id,
-      user:user._id
-    }}).then((res)=>{
-      onDeletePost()
-    })
+  function deletePost() {
+    axios
+      .delete("http://localhost:5000/user/delete", {
+        params: {
+          post: post._id,
+          user: user._id,
+        },
+      })
+      .then((res) => {
+        onDeletePost();
+      });
   }
 
   useEffect(() => {
@@ -67,7 +69,7 @@ function OptionsModal({
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         dispatch(setPost(res.data));
       });
   }
@@ -119,7 +121,11 @@ function OptionsModal({
               ) : (
                 <li onClick={save}>Add to favourites</li>
               )}
-              <li onClick={()=> navigate(`/postPage/${post._id}`)}>Go to post</li>
+              {!currentUrl.includes("postPage") && (
+                <li onClick={() => navigate(`/postPage/${post._id}`)}>
+                  Go to post
+                </li>
+              )}
               <li
                 onClick={() => {
                   close();
@@ -133,11 +139,19 @@ function OptionsModal({
           ) : (
             <ul>
               <li onClick={deletePost}>Delete</li>
-              <li onClick={()=>{
-                close()
-                openPostModal()
-              }}>Edit</li>
-              <li onClick={()=> navigate(`/postPage/${post._id}`)}>Go to post</li>
+              <li
+                onClick={() => {
+                  close();
+                  openPostModal();
+                }}
+              >
+                Edit
+              </li>
+              {!currentUrl.includes("postPage") && (
+                <li onClick={() => navigate(`/postPage/${post._id}`)}>
+                  Go to post
+                </li>
+              )}
               <li onClick={close}>Cancel</li>
             </ul>
           )}

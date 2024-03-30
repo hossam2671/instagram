@@ -4,16 +4,22 @@
     min-height: 100vh;
     position: fixed;
 }
+.sideMenu .moreMenu{
+    position: absolute;
+    bottom: 80px;
+    left: 15px;
+    z-index: 1000;
+}
 .sideMenu .logo{
     padding: 35px;
 }
-.sideMenu ul{
+.sideMenu > ul{
     padding: 10px 0 140px;
     list-style: none;
     display: flex;
     flex-direction: column;
 }
-.sideMenu ul li{
+.sideMenu > ul li{
     padding: 15px 12px;
     margin: 0 3px;
     display: flex;
@@ -21,7 +27,7 @@
     cursor: pointer;
     position: relative;
 }
-.sideMenu ul li::after{
+.sideMenu > ul li::after{
     position: absolute;
     content: "";
     top: 0;
@@ -31,17 +37,17 @@
     background-color: transparent;
     border-radius: 8px;
 }
-.sideMenu ul li:hover::after{
+.sideMenu > ul li:hover::after{
     background-color: rgba(0, 0, 0, 0.095);
 }
-.sideMenu ul li i {
+.sideMenu > ul li i {
     width: 35px;
     font-size: 22px;
 }
-.sideMenu ul li span{
+.sideMenu > ul li span{
     font-size: 16px;
 }
-.sideMenu ul li img{
+.sideMenu > ul li img{
     width: 25px;
     height: 25px;
     border-radius: 50%;
