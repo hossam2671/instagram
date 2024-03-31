@@ -5,11 +5,13 @@ import PostModal from "../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
 import MoreMenu from "../MoreMenu/MoreMenu";
 import axios from "axios";
+import SwitchModal from "../SwitchModal/SwitchModal";
 
 function SideMenu() {
   const navigate = useNavigate();
   const menuRef = useRef(null);
   const [opened, setOpened] = useState(false);
+  const [opened2, setOpened2] = useState(false);
   const [moreMenu, setMoreMenu] = useState(false);
   const [user, setUser] = useState("");
 
@@ -36,13 +38,15 @@ function SideMenu() {
   const handleClose = (x) => {
     setOpened(false);
   };
+  const handleClose2 = (x) => {
+    setOpened2(false);
+  };
   return (
     <>
       <div ref={menuRef} className={style["sideMenu"]}>
         {moreMenu && (
           <div className={style["moreMenu"]}>
-            {" "}
-            <MoreMenu />{" "}
+            <MoreMenu openSwichModal={()=>setOpened2(true)}/>
           </div>
         )}
         <div className={style["logo"]}>
@@ -51,6 +55,7 @@ function SideMenu() {
             handleClose={(x) => handleClose(x)}
             edit={false}
           />
+          <SwitchModal open={opened2} handleClose={(x) => handleClose2(x)} />
           <svg
             aria-label="Instagram"
             class="x1lliihq x1n2onr6 x5n08af"
@@ -104,7 +109,7 @@ function SideMenu() {
           >
             <i class="fa-solid fa-plus"></i> <span>create</span>
           </li>
-          <li>
+          <li onClick={()=>navigate(`/profile/${localStorage.getItem("user")}`)}>
             <img src={`http://localhost:5000/${user.img}`} />{" "}
             <span>Profile</span>
           </li>

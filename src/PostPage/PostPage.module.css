@@ -5,7 +5,7 @@
     margin-left: 27%;
     border: 1px solid #e3e3e3;
     max-height: 95vh;
-    margin-top: 5vh;
+    /* padding-top: 5vh; */
 }
 .postDetails .img{
     max-width: 60%;
@@ -160,4 +160,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 15px
+}
+.footer{
+    padding: 45px 300px 50px 400px;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import style from "./MoreMenu.module.css";
 import { useNavigate } from "react-router-dom";
 
-function MoreMenu() {
+function MoreMenu({ openSwichModal }) {
   const navigate = useNavigate();
   return (
     <div className={style["moreMenu"]}>
@@ -16,14 +16,20 @@ function MoreMenu() {
         <li>
           <i class="fa-regular fa-bookmark"></i> Saved
         </li>
-        <li>
-             Switch accounts
+        <li
+          onClick={() => {
+            openSwichModal();
+          }}
+        >
+          Switch accounts
         </li>
-        <li onClick={()=>{
-          localStorage.removeItem("user")
-          navigate("/login")
-        }}>
-             Log out
+        <li
+          onClick={() => {
+            localStorage.removeItem("user");
+            navigate("/login");
+          }}
+        >
+          Log out
         </li>
       </ul>
     </div>

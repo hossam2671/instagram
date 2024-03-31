@@ -1,0 +1,11 @@
+.profile{
+    padding-left: 450px;
+}
+.profile .info{
+    display: flex;
+    padding: 0 30px;
+}
+.profile img{
+    width: 20px;
+    height: 20px;
+}

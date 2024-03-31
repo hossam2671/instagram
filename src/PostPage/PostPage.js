@@ -14,6 +14,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../Redux/Slices/Posts";
 import PostInPostPage from "./PostInPostPage/PostInPostPage";
+import Footer from "../Footer/Footer";
 
 function PostPage() {
   const { id } = useParams();
@@ -228,119 +229,129 @@ function PostPage() {
         handleClose={(x) => handleClose5(x)}
         user={user}
       />
-      <div className={style["postDetails"]}>
-        <div className={style["img"]}>
-          <img src={`http://localhost:5000/${post.img}`} />
-        </div>
-        <div className={style["post"]}>
-          <div className={style["head"]}>
-            <div className={style["user"]}>
-              <img
-                onMouseEnter={() => setShowUserDetails(true)}
-                onMouseLeave={() => setShowUserDetails(false)}
-                src={`http://localhost:5000/${user?.img}`}
-              />
-              <h4
-                onMouseEnter={() => setShowUserDetails(true)}
-                onMouseLeave={() => setShowUserDetails(false)}
-              >
-                {user.userName}
-              </h4>
-            </div>
-            <i
-              onClick={() => setOpened3(true)}
-              class="fa-solid fa-ellipsis"
-            ></i>
+      <div style={{ paddingTop: "5vh" }}>
+        <div className={style["postDetails"]}>
+          <div className={style["img"]}>
+            <img src={`http://localhost:5000/${post.img}`} />
           </div>
-          <div className={style["scroll"]}>
-            <div className={style["content"]}>
-              <img src={`http://localhost:5000/${user?.img}`} />
+          <div className={style["post"]}>
+            <div className={style["head"]}>
               <div className={style["user"]}>
-                <h4>
-                  <span>{user.userName}</span> {post?.content}
+                <img
+                  onMouseEnter={() => setShowUserDetails(true)}
+                  onMouseLeave={() => setShowUserDetails(false)}
+                  src={`http://localhost:5000/${user?.img}`}
+                />
+                <h4
+                  onMouseEnter={() => setShowUserDetails(true)}
+                  onMouseLeave={() => setShowUserDetails(false)}
+                >
+                  {user.userName}
                 </h4>
-                <h5>{date}</h5>
+              </div>
+              <i
+                onClick={() => setOpened3(true)}
+                class="fa-solid fa-ellipsis"
+              ></i>
+            </div>
+            <div className={style["scroll"]}>
+              <div className={style["content"]}>
+                <img src={`http://localhost:5000/${user?.img}`} />
+                <div className={style["user"]}>
+                  <h4>
+                    <span>{user.userName}</span> {post?.content}
+                  </h4>
+                  <h5>{date}</h5>
+                </div>
+              </div>
+              <div className={style["comments"]}>
+                {post
+                  ? post?.comments?.map((comment) => (
+                      <Comment
+                        key={comment._id}
+                        user={user}
+                        comment={comment}
+                      />
+                    ))
+                  : post?.comments?.map((comment) => (
+                      <Comment
+                        key={comment._id}
+                        user={user}
+                        comment={comment}
+                      />
+                    ))}
               </div>
             </div>
-            <div className={style["comments"]}>
-              {post
-                ? post?.comments?.map((comment) => (
-                    <Comment key={comment._id} user={user} comment={comment} />
-                  ))
-                : post?.comments?.map((comment) => (
-                    <Comment key={comment._id} user={user} comment={comment} />
-                  ))}
-            </div>
-          </div>
-          <div className={style["icons"]}>
-            <div className={style["left"]}>
-              {liked ? (
-                <i
-                  onClick={unlike}
-                  class="fa-solid fa-heart"
-                  style={{ color: "#ff0000" }}
-                ></i>
+            <div className={style["icons"]}>
+              <div className={style["left"]}>
+                {liked ? (
+                  <i
+                    onClick={unlike}
+                    class="fa-solid fa-heart"
+                    style={{ color: "#ff0000" }}
+                  ></i>
+                ) : (
+                  <i onClick={like} class="fa-regular fa-heart"></i>
+                )}
+                <i class="fa-regular fa-comment"></i>
+                <i class="fa-regular fa-share-from-square"></i>
+              </div>
+              {saved ? (
+                <i onClick={unsave} class="fa-solid fa-bookmark"></i>
               ) : (
-                <i onClick={like} class="fa-regular fa-heart"></i>
+                <i onClick={save} class="fa-regular fa-bookmark"></i>
               )}
-              <i class="fa-regular fa-comment"></i>
-              <i class="fa-regular fa-share-from-square"></i>
             </div>
-            {saved ? (
-              <i onClick={unsave} class="fa-solid fa-bookmark"></i>
-            ) : (
-              <i onClick={save} class="fa-regular fa-bookmark"></i>
-            )}
-          </div>
-          <div className={style["likes"]}>
-            <h5 onClick={() => setOpened(true)}>
-              {post?.likes ? post?.likes.length : 0} likes
-            </h5>
-            <h6>{date}</h6>
-          </div>
-          <div className={style["textField"]}>
-            <img src={`http://localhost:5000/${user?.img}`} />
-            <TextField
-              placeholder="Add a comment"
-              sx={{
-                width: "100%",
-                "& .MuiOutlinedInput-root": {
-                  border: "none",
-                },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
+            <div className={style["likes"]}>
+              <h5 onClick={() => setOpened(true)}>
+                {post?.likes ? post?.likes.length : 0} likes
+              </h5>
+              <h6>{date}</h6>
+            </div>
+            <div className={style["textField"]}>
+              <img src={`http://localhost:5000/${user?.img}`} />
+              <TextField
+                placeholder="Add a comment"
+                sx={{
+                  width: "100%",
+                  "& .MuiOutlinedInput-root": {
                     border: "none",
                   },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-              }}
-              id="outlined-basic"
-              variant="outlined"
-              value={comment}
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <h4
-                      onClick={addComment}
-                      style={{
-                        fontSize: "14px",
-                        color: comment
-                          ? "rgb(16 125 227)"
-                          : "rgb(16 125 227 / 26%)",
-                        fontWeight: "normal",
-                        cursor: comment ? "pointer" : "",
-                      }}
-                    >
-                      Post
-                    </h4>
-                  </InputAdornment>
-                ),
-              }}
-            />
+                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: "none",
+                    },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                  },
+                }}
+                id="outlined-basic"
+                variant="outlined"
+                value={comment}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <h4
+                        onClick={addComment}
+                        style={{
+                          fontSize: "14px",
+                          color: comment
+                            ? "rgb(16 125 227)"
+                            : "rgb(16 125 227 / 26%)",
+                          fontWeight: "normal",
+                          cursor: comment ? "pointer" : "",
+                        }}
+                      >
+                        Post
+                      </h4>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -359,6 +370,9 @@ function PostPage() {
           </div>
         </div>
       )}
+      <div className={style["footer"]}>
+        <Footer />
+      </div>
     </>
   );
 }
