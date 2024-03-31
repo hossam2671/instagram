@@ -1,7 +1,7 @@
 .moreMenu{
     background-color: white;
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-    padding: 30px 110px 5px 30px;
+    padding: 10px 130px 5px 10px;
     border-radius: 10px;
     position: relative;
 }
@@ -9,23 +9,44 @@
     position: absolute;
     content: "";
     width: 100%;
-    height: 5px;
+    height: 6px;
     background-color: #f4f4f4;
     left: 0;
-    bottom: 115px;
+    bottom: 120px;
 }
 .moreMenu ul{
     list-style: none;
     width: 120px;
 }
 .moreMenu ul li{
-    margin-bottom: 25px;
+    margin-bottom: 5px;
+    font-weight: normal;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    width: 240px;
+    height: 50px;
+    padding-left: 15px;
+}
+.moreMenu ul li::after{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 8px;
+}
+.moreMenu ul li:hover::after{
+    background-color: rgba(0, 0, 0, 0.095);
 }
 .moreMenu ul li:nth-of-type(3){
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     position: relative;
 }
-
 .moreMenu ul li i{
     width: 25px;
 }

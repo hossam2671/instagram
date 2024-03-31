@@ -1,7 +1,9 @@
 import React from "react";
 import style from "./MoreMenu.module.css";
+import { useNavigate } from "react-router-dom";
 
 function MoreMenu() {
+  const navigate = useNavigate();
   return (
     <div className={style["moreMenu"]}>
       <ul>
@@ -17,7 +19,10 @@ function MoreMenu() {
         <li>
              Switch accounts
         </li>
-        <li>
+        <li onClick={()=>{
+          localStorage.removeItem("user")
+          navigate("/login")
+        }}>
              Log out
         </li>
       </ul>

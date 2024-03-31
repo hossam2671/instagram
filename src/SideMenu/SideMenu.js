@@ -1,26 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import profile from "../assets/119986446_3340727139310180_8618841474764541280_n.jpg";
 import style from "./SideMenu.module.css";
 import PostModal from "../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
 import MoreMenu from "../MoreMenu/MoreMenu";
+import axios from "axios";
 
 function SideMenu() {
   const navigate = useNavigate();
+  const menuRef = useRef(null);
   const [opened, setOpened] = useState(false);
   const [moreMenu, setMoreMenu] = useState(false);
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/user/getUser", {
+        params: { id: localStorage.getItem("user") },
+      })
+      .then((res) => {
+        setUser(res.data);
+      });
+
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMoreMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleClose = (x) => {
     setOpened(false);
   };
   return (
     <>
-      <div className={style["sideMenu"]}>
-        {
-          moreMenu && <div className={style["moreMenu"]}> <MoreMenu /> </div>
-        }
+      <div ref={menuRef} className={style["sideMenu"]}>
+        {moreMenu && (
+          <div className={style["moreMenu"]}>
+            {" "}
+            <MoreMenu />{" "}
+          </div>
+        )}
         <div className={style["logo"]}>
-          <PostModal open={opened} handleClose={(x) => handleClose(x)} edit={false}/>
+          <PostModal
+            open={opened}
+            handleClose={(x) => handleClose(x)}
+            edit={false}
+          />
           <svg
             aria-label="Instagram"
             class="x1lliihq x1n2onr6 x5n08af"
@@ -40,17 +70,21 @@ function SideMenu() {
           </svg>
         </div>
         <ul>
-          <li onClick={()=>{
-            navigate("/home")
-          }}>
+          <li
+            onClick={() => {
+              navigate("/home");
+            }}
+          >
             <i class="fa-solid fa-house"></i> <span>Home</span>
           </li>
           <li>
             <i class="fa-solid fa-magnifying-glass"></i> <span>Search</span>
           </li>
-          <li onClick={()=>{
-            navigate("/explore")
-          }}>
+          <li
+            onClick={() => {
+              navigate("/explore");
+            }}
+          >
             <i class="fa-regular fa-compass"></i> <span>Explore</span>
           </li>
           <li>
@@ -71,10 +105,11 @@ function SideMenu() {
             <i class="fa-solid fa-plus"></i> <span>create</span>
           </li>
           <li>
-            <img src={profile} /> <span>Profile</span>
+            <img src={`http://localhost:5000/${user.img}`} />{" "}
+            <span>Profile</span>
           </li>
         </ul>
-        <div onClick={()=>setMoreMenu(true)} className={style["more"]}>
+        <div onClick={() => setMoreMenu(!moreMenu)} className={style["more"]}>
           <i class="fa-solid fa-bars"></i>
           <span>More</span>
         </div>
