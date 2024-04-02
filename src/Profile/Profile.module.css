@@ -1,11 +1,57 @@
 .profile{
-    padding-left: 450px;
+    padding:  0 200px 0 450px;
 }
 .profile .info{
     display: flex;
-    padding: 0 30px;
+    padding: 40px 30px;
+}
+.profile .img{
+    width: 30%;
 }
 .profile img{
-    width: 20px;
-    height: 20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.profile .details{
+    display: flex;
+    flex-direction: column;
+}
+.profile .details .name{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.profile .details .name h3{
+    margin-right: 30px;
+    font-weight: 500;
+}
+.profile .details .name h4{
+    background-color: #efefef;
+    font-weight: 400;
+    padding: 5px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.profile .details .numbers{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.profile .details .numbers .number{
+    display: flex;
+    align-items: center;
+    margin-right: 35px;
+}
+.profile .details .numbers .number h3{
+    margin-right: 4px;
+}
+.profile .details .numbers .number h4{
+    font-weight: normal;
+}
+.profile .details .bio h3{
+    font-size: 14px;
+    font-weight: 600;
 }
