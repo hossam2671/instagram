@@ -6,10 +6,12 @@ import Suggest from "./Suggest/Suggest";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../Redux/Slices/Posts";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.PostSlice);
+  const navigate = useNavigate();
   function getPost(){
     axios
       .get("http://localhost:5000/user/getPost", {
@@ -17,7 +19,9 @@ function Home() {
       })
       .then((res) => {
         dispatch(setPost(res.data));
-      });
+      }).catch((err)=>{
+        navigate("/login")
+      })
   }
   useEffect(() => {
     getPost()

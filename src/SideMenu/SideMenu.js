@@ -22,6 +22,8 @@ function SideMenu() {
       })
       .then((res) => {
         setUser(res.data);
+      }).catch((err) => {
+        navigate("/login");
       });
 
     function handleClickOutside(event) {

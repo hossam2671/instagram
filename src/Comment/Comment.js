@@ -3,8 +3,10 @@ import style from "./Comment.module.css";
 import axios from "axios";
 import LikesModal from "../LikesModal/LikesModal";
 import UserDetails from "../UserDetails/UserDetails";
+import { useNavigate } from "react-router-dom";
 
 function Comment({ user, comment }) {
+  const navigate = useNavigate();
   const [theComment, setTheComment] = useState("");
   const [liked, setLiked] = useState(false);
   const [opened, setOpened] = React.useState(false);
@@ -53,7 +55,7 @@ function Comment({ user, comment }) {
       });
   }
   return (
-    <div style={{position:"relative" }}>
+    <div style={{ position: "relative" }}>
       <LikesModal
         open={opened}
         handleClose={(x) => handleClose(x)}
@@ -63,6 +65,7 @@ function Comment({ user, comment }) {
         <div
           onMouseEnter={() => setShowUserDetails(true)}
           onMouseLeave={() => setShowUserDetails(false)}
+          onClick={() => navigate(`/profile/${user._id}`)}
           className={style["userDetails"]}
         >
           <UserDetails user={user} />
@@ -73,6 +76,7 @@ function Comment({ user, comment }) {
           <img
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
+            onClick={() => navigate(`/profile/${user._id}`)}
             src={`http://localhost:5000/${theComment?.user?.img}`}
           />
           <div className={style["commentContent"]}>
@@ -81,6 +85,7 @@ function Comment({ user, comment }) {
                 <span
                   onMouseEnter={() => setShowUserDetails(true)}
                   onMouseLeave={() => setShowUserDetails(false)}
+                  onClick={() => navigate(`/profile/${user._id}`)}
                 >
                   {theComment.user?.userName}
                 </span>

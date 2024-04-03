@@ -26,6 +26,7 @@
     height: 35px;
     border-radius: 50%;
     margin-right: 15px;
+    cursor: pointer;
 }
 .post .head .info h4{
     font-weight: 600;

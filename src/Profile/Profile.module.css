@@ -1,57 +1,130 @@
-.profile{
-    padding:  0 200px 0 450px;
+.profile {
+  padding: 0 200px 80px 430px;
 }
-.profile .info{
-    display: flex;
-    padding: 40px 30px;
+.profile .info {
+  display: flex;
+  padding: 40px 30px;
 }
-.profile .img{
-    width: 30%;
+.profile .img {
+  width: 30%;
 }
-.profile img{
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+.profile .img img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
-.profile .details{
-    display: flex;
-    flex-direction: column;
+.profile .details {
+  display: flex;
+  flex-direction: column;
 }
-.profile .details .name{
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
+.profile .details .name {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
-.profile .details .name h3{
-    margin-right: 30px;
-    font-weight: 500;
+.profile .details .name h3 {
+  margin-right: 30px;
+  font-weight: 500;
 }
-.profile .details .name h4{
-    background-color: #efefef;
-    font-weight: 400;
-    padding: 5px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-right: 10px;
+.profile .details .name h4 {
+  background-color: #efefef;
+  font-weight: 400;
+  padding: 5px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 10px;
 }
-.profile .details .numbers{
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+.profile .details .numbers {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
-.profile .details .numbers .number{
-    display: flex;
-    align-items: center;
-    margin-right: 35px;
+.profile .details .numbers .number {
+  display: flex;
+  align-items: center;
+  margin-right: 35px;
 }
-.profile .details .numbers .number h3{
-    margin-right: 4px;
+.profile .details .numbers .number h3 {
+  margin-right: 4px;
 }
-.profile .details .numbers .number h4{
-    font-weight: normal;
+.profile .details .numbers .number h4 {
+  font-weight: normal;
 }
-.profile .details .bio h3{
-    font-size: 14px;
-    font-weight: 600;
+.profile .details .bio h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.profile .details .bio h5{
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 12px;
+  cursor: pointer;
+}
+.profile .details .bio h5 span{
+  color: #a0898e;
+}
+.profile .posts {
+  padding-top: 60px;
+  position: relative;
+}
+.profile .posts::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 1px;
+  left: 0;
+  top: 30px;
+  background-color: #f2f2f2;
+}
+.profile .posts .taps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile .posts .taps .tap {
+  display: flex;
+  align-items: center;
+  margin-right: 80px;
+  cursor: pointer;
+  position: relative;
+}
+.profile .posts .taps .active::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  left: 0;
+  height: 1px;
+  top: -30px;
+  z-index: 1000;
+  background-color: black;
+}
+.profile .posts .taps .tap i {
+  font-size: 12px;
+  margin-right: 8px;
+  color: #5f5f5f;
+}
+.profile .posts .taps .tap h4 {
+  font-size: 14px;
+  font-weight: normal;
+  color: #5f5f5f;
+}
+.profile .posts .taps .tap.active i {
+  color: black;
+}
+.profile .posts .taps .tap.tap.active h4 {
+  color: black;
+  font-weight: 500;
+}
+.profile .posts .preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 20px 0 40px;
+}
+.profile .posts .preview .post {
+  width: 33%;
+  height: 300px;
+  margin-bottom: 20px;
 }

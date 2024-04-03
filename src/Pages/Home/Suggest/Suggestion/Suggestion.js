@@ -4,9 +4,11 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setPost } from "../../../../Redux/Slices/Posts";
 import UserDetails from "../../../../UserDetails/UserDetails";
+import { useNavigate } from "react-router-dom";
 
 function Suggestion({ name, id, img, user }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [followed, setFollowed] = useState(false);
   const [theUser, setTheUser] = useState({});
   const [showUserDetails, setShowUserDetails] = useState(false);
@@ -82,12 +84,14 @@ function Suggestion({ name, id, img, user }) {
           </div>
         )}
         <img
+          onClick={()=> navigate(`/profile/${id}`)}
           onMouseEnter={() => setShowUserDetails(true)}
           onMouseLeave={() => setShowUserDetails(false)}
           src={`http://localhost:5000/${img}`}
         />
         <div className={style["name"]}>
           <h5
+            onClick={()=> navigate(`/profile/${id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
           >

@@ -32,6 +32,8 @@ function Suggest() {
       })
       .then((res) => {
         setSuggested(res.data);
+      }).catch((err) => {
+        navigate("/login");
       });
   }, [opened]);
   return (

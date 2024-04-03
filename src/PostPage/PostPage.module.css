@@ -8,7 +8,7 @@
     /* padding-top: 5vh; */
 }
 .postDetails .img{
-    max-width: 60%;
+    width: 50%;
 }
 .postDetails .img img{
     height: 100%;
@@ -56,7 +56,7 @@
     cursor: pointer;
 }
 .postDetails .scroll{
-    height: 285px;
+    height: 400px;
     overflow-y: scroll;
     padding-left: 20px;
 }

@@ -12,8 +12,9 @@ import UnfollowModal from "../../../UnfollowModal/UnfollowModal";
 import AboutModal from "../../../AboutModal/AboutModal";
 import UserDetails from "../../../UserDetails/UserDetails";
 import PostModal from "../../../PostModal/PostModal";
+import { useNavigate } from "react-router-dom";
 
-function Post({ post , onDeletePost }) {
+function Post({ post, onDeletePost }) {
   const [user, setUser] = useState({});
   const [thePost, setThePost] = useState({});
   const [liked, setLiked] = useState(false);
@@ -28,6 +29,7 @@ function Post({ post , onDeletePost }) {
   const [comment, setComment] = useState("");
   const [showUserDetails, setShowUserDetails] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClose2 = (x) => {
     setOpened2(false);
@@ -80,9 +82,9 @@ function Post({ post , onDeletePost }) {
     }
   }
   function convertTimeDifference(milliseconds) {
-    const seconds = Math.floor(milliseconds / 1000)
-    if (seconds < 60){
-      return seconds + " s"
+    const seconds = Math.floor(milliseconds / 1000);
+    if (seconds < 60) {
+      return seconds + " s";
     }
     const minutes = Math.floor(milliseconds / (1000 * 60));
     if (minutes < 60) {
@@ -97,7 +99,7 @@ function Post({ post , onDeletePost }) {
       return days + "d";
     }
     const months = Math.floor(days / 30);
-    console.log(months)
+    console.log(months);
     if (months < 12) {
       return months + "mo";
     }
@@ -113,7 +115,7 @@ function Post({ post , onDeletePost }) {
         setThePost(res.data);
         const timeDifference = new Date() - new Date(res.data.date);
         const convertedDifference = convertTimeDifference(timeDifference);
-        console.log(convertedDifference)
+        console.log(convertedDifference);
         setDate(convertedDifference);
         if (res.data.likes.includes(localStorage.getItem("user"))) {
           setLiked(true);
@@ -147,7 +149,7 @@ function Post({ post , onDeletePost }) {
           setSaved(false);
         }
       });
-  }, [opened4, opened3 , opened2]);
+  }, [opened4, opened3, opened2]);
 
   function like() {
     axios
@@ -210,12 +212,12 @@ function Post({ post , onDeletePost }) {
         date={date}
         onDeletePost={onDeletePost}
       />
-      <PostModal 
+      <PostModal
         open={opened6}
-        handleClose={(x)=> handleClose6(x) }
+        handleClose={(x) => handleClose6(x)}
         thePost={post}
-        edit = {true}
-        />
+        edit={true}
+      />
       <OptionsModal
         open={opened3}
         handleClose={(x) => handleClose3(x)}
@@ -223,7 +225,7 @@ function Post({ post , onDeletePost }) {
         openUnfollowModal={() => setOpened4(true)}
         openAboutModal={() => setOpened5(true)}
         onDeletePost={onDeletePost}
-        openPostModal={()=> setOpened6(true)}
+        openPostModal={() => setOpened6(true)}
         user={user}
       />
 
@@ -249,11 +251,13 @@ function Post({ post , onDeletePost }) {
       <div className={style["head"]}>
         <div className={style["info"]}>
           <img
+            onClick={() => navigate(`/profile/${user._id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
             src={`http://localhost:5000/${user.img}`}
           />
           <h4
+            onClick={() => navigate(`/profile/${user._id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
           >
@@ -300,14 +304,13 @@ function Post({ post , onDeletePost }) {
           {thePost.likes ? thePost.likes.length : 0} likes
         </h5>
       </div>
-      {
-        post.content &&
-      <div className={style["content"]}>
-        <h4>
-          {user.userName} <span>{post.content}</span>
-        </h4>
-      </div>
-      }
+      {post.content && (
+        <div className={style["content"]}>
+          <h4>
+            {user.userName} <span>{post.content}</span>
+          </h4>
+        </div>
+      )}
       <div className={style["comment"]}>
         <h4
           onClick={() => {
