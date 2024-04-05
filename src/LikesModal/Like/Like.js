@@ -1,32 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Like.module.css";
 import axios from "axios";
 
 function Like({ id }) {
   const [user, setUser] = useState({});
   const [followed, setFollowed] = useState(false);
-  axios
-    .get("http://localhost:5000/user/getUser", { params: { id: id } })
-    .then((res) => {
-      setUser(res.data);
-    });
-  axios
-    .get("http://localhost:5000/user/getUser", {
-      params: { id: localStorage.getItem("user") },
-    })
-    .then((res) => {
-      let found = false;
-      for (let i = 0; i < res.data.follwing.length; i++) {
-        if (res.data.follwing[i]?._id === id) {
-          setFollowed(true);
-          found = true;
-          break;
+  useEffect(()=>{
+
+    axios
+      .get("http://localhost:5000/user/getUser", { params: { id: id } })
+      .then((res) => {
+        setUser(res.data);
+      });
+    axios
+      .get("http://localhost:5000/user/getUser", {
+        params: { id: localStorage.getItem("user") },
+      })
+      .then((res) => {
+        let found = false;
+        for (let i = 0; i < res.data.follwing.length; i++) {
+          if (res.data.follwing[i]?._id === id) {
+            setFollowed(true);
+            found = true;
+            break;
+          }
         }
-      }
-      if (!found) {
-        setFollowed(false);
-      }
-    });
+        if (!found) {
+          setFollowed(false);
+        }
+      });
+  },[])
 
   function follow() {
     axios

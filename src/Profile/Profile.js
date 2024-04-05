@@ -5,9 +5,12 @@ import style from "./Profile.module.css";
 import axios from "axios";
 import TheExplore from "../Explore/TheExplore/TheExplore";
 import UnfollowModal from "../UnfollowModal/UnfollowModal";
-import Footer from '../Footer/Footer'
+import Footer from "../Footer/Footer";
+import { useNavigate } from "react-router-dom";
+import FollowingModal from "../FollowingModal/FollowingModal";
 
 function Profile() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
@@ -15,23 +18,31 @@ function Profile() {
   const [tap, setTap] = useState("post");
   const [followed, setFollowed] = useState(false);
   const [users, setUsers] = useState([]);
+  const [opened, setOpened] = useState(false);
+  const [opened2, setOpened2] = useState(false);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/user/getUser", { params: { id: id } })
       .then((res) => {
         setUser(res.data);
-      });
+      }).catch((err)=>{
+        navigate("/login")
+      })
     axios
       .get("http://localhost:5000/user/userPosts", { params: { id: id } })
       .then((res) => {
         setPosts(res.data);
-      });
+      }).catch((err)=>{
+        navigate("/login")
+      })
     axios
       .get("http://localhost:5000/user/userSavedPosts", { params: { id: id } })
       .then((res) => {
         setSavedPosts(res.data);
-      });
+      }).catch((err)=>{
+        navigate("/login")
+      })
     axios
       .get("http://localhost:5000/user/getUser", {
         params: { id: localStorage.getItem("user") },
@@ -51,15 +62,26 @@ function Profile() {
             setFollowed(false);
           }
         }
-      });
+      }).catch(()=>{
+        navigate("/login")
+      })
     axios
       .get("http://localhost:5000/user/followedBy", {
         params: { user: id, mine: localStorage.getItem("user") },
       })
       .then((res) => {
         setUsers(res.data);
-      });
-  }, [id]);
+      }).catch((err)=>{
+        navigate("/login")
+      })
+  }, [id, opened , opened2]);
+
+  const handleClose = (x) => {
+    setOpened(false);
+  };
+  const handleClose2 = (x) => {
+    setOpened2(false);
+  };
 
   function follow() {
     axios
@@ -74,6 +96,16 @@ function Profile() {
   return (
     <div>
       <SideMenu />
+      <UnfollowModal
+        open={opened}
+        handleClose={(x) => handleClose(x)}
+        user={user}
+      />
+      <FollowingModal
+        open={opened2}
+        handleClose={(x) => handleClose2(x)}
+        following={user.follwing}
+      />
       <div className={style["profile"]}>
         <div className={style["info"]}>
           <div className={style["img"]}>
@@ -85,10 +117,17 @@ function Profile() {
               {id === localStorage.getItem("user") ? (
                 <>
                   <h4>Edit profile</h4>
-                  <h4>Log out</h4>
+                  <h4
+                    onClick={() => {
+                      navigate("/login");
+                      localStorage.removeItem("user");
+                    }}
+                  >
+                    Log out
+                  </h4>
                 </>
               ) : followed ? (
-                <h4>Following</h4>
+                <h4 onClick={() => setOpened(true)}>Following</h4>
               ) : (
                 <h4
                   onClick={follow}
@@ -107,7 +146,7 @@ function Profile() {
                 <h3>{user.follwers?.length}</h3>
                 <h4>followers</h4>
               </div>
-              <div className={style["number"]}>
+              <div onClick={()=> setOpened2(true)} className={style["number"]}>
                 <h3>{user.follwing?.length}</h3>
                 <h4>following</h4>
               </div>

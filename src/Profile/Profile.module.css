@@ -45,6 +45,9 @@
   align-items: center;
   margin-right: 35px;
 }
+.profile .details .numbers .number:not(:first-child){
+  cursor: pointer;
+}
 .profile .details .numbers .number h3 {
   margin-right: 4px;
 }
