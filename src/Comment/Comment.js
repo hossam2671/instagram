@@ -6,6 +6,7 @@ import UserDetails from "../UserDetails/UserDetails";
 import { useNavigate } from "react-router-dom";
 
 function Comment({ user, comment }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const navigate = useNavigate();
   const [theComment, setTheComment] = useState("");
   const [liked, setLiked] = useState(false);
@@ -18,7 +19,7 @@ function Comment({ user, comment }) {
 
   function getComment() {
     axios
-      .get("http://localhost:5000/user/getComment", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getComment`, {
         params: { comment: comment },
       })
       .then((res) => {
@@ -34,7 +35,7 @@ function Comment({ user, comment }) {
 
   function like() {
     axios
-      .put("http://localhost:5000/user/likeComment", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/likeComment`, {
         user: localStorage.getItem("user"),
         comment: theComment._id,
       })
@@ -45,7 +46,7 @@ function Comment({ user, comment }) {
   }
   function unlike() {
     axios
-      .put("http://localhost:5000/user/unlikeComment", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unlikeComment`, {
         user: localStorage.getItem("user"),
         comment: theComment._id,
       })
@@ -77,7 +78,7 @@ function Comment({ user, comment }) {
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
             onClick={() => navigate(`/profile/${user._id}`)}
-            src={`http://localhost:5000/${theComment?.user?.img}`}
+            src={`${REACT_APP_INSTAGRAM_API_URL}${theComment?.user?.img}`}
           />
           <div className={style["commentContent"]}>
             <div className={style["user"]}>

@@ -29,6 +29,7 @@ const modalStyle = {
 };
 
 function PostDetails({ open: op, handleClose: close, post, user, date, onDeletePost }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [comment, setComment] = React.useState("");
   const [thePost, setThePost] = React.useState(post);
   const [liked, setLiked] = React.useState(false);
@@ -70,7 +71,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
     }
     getPost();
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -86,7 +87,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
   function addComment() {
     if (comment) {
       axios
-        .post("http://localhost:5000/user/addComment", {
+        .post(`${REACT_APP_INSTAGRAM_API_URL}user/addComment`, {
           user: localStorage.getItem("user"),
           post: post._id,
           content: comment,
@@ -95,7 +96,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
           getPost();
           setComment("");
           axios
-            .get("http://localhost:5000/user/getPost", {
+            .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
               params: { id: localStorage.getItem("user") },
             })
             .then((res) => {
@@ -107,7 +108,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
 
   function getPost() {
     axios
-      .get("http://localhost:5000/user/getOnePost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getOnePost`, {
         params: { post: post._id },
       })
       .then((res) => {
@@ -117,7 +118,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
 
   function like() {
     axios
-      .put("http://localhost:5000/user/like", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/like`, {
         post: post._id,
         user: localStorage.getItem("user"),
       })
@@ -129,7 +130,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
 
   function unlike() {
     axios
-      .put("http://localhost:5000/user/unlike", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unlike`, {
         post: post._id,
         user: localStorage.getItem("user"),
       })
@@ -140,7 +141,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
   }
   function save() {
     axios
-      .put("http://localhost:5000/user/save", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/save`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })
@@ -151,7 +152,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
   }
   function unsave() {
     axios
-      .put("http://localhost:5000/user/unsave", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unsave`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })
@@ -213,7 +214,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
           )}
           <div className={style["postDetails"]}>
             <div className={style["img"]}>
-              <img src={`http://localhost:5000/${post.img}`} />
+              <img src={`${REACT_APP_INSTAGRAM_API_URL}${post.img}`} />
             </div>
             <div className={style["post"]}>
               <div className={style["head"]}>
@@ -221,7 +222,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
                   <img
                     onMouseEnter={() => setShowUserDetails(true)}
                     onMouseLeave={() => setShowUserDetails(false)}
-                    src={`http://localhost:5000/${user.img}`}
+                    src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`}
                   />
                   <h4
                     onMouseEnter={() => setShowUserDetails(true)}
@@ -234,7 +235,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
               </div>
               <div className={style["scroll"]}>
                 <div className={style["content"]}>
-                  <img src={`http://localhost:5000/${user.img}`} />
+                  <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
                   <div className={style["user"]}>
                     <h4>
                       <span>{user.userName}</span> {thePost?.content}

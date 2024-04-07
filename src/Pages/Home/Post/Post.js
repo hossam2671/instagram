@@ -15,6 +15,7 @@ import PostModal from "../../../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
 
 function Post({ post, onDeletePost }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [user, setUser] = useState({});
   const [thePost, setThePost] = useState({});
   const [liked, setLiked] = useState(false);
@@ -63,7 +64,7 @@ function Post({ post, onDeletePost }) {
   function addComment() {
     if (comment) {
       axios
-        .post("http://localhost:5000/user/addComment", {
+        .post(`${REACT_APP_INSTAGRAM_API_URL}user/addComment`, {
           user: localStorage.getItem("user"),
           post: post._id,
           content: comment,
@@ -72,7 +73,7 @@ function Post({ post, onDeletePost }) {
           getPost();
           setComment("");
           axios
-            .get("http://localhost:5000/user/getPost", {
+            .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
               params: { id: localStorage.getItem("user") },
             })
             .then((res) => {
@@ -108,7 +109,7 @@ function Post({ post, onDeletePost }) {
   }
   function getPost() {
     axios
-      .get("http://localhost:5000/user/getOnePost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getOnePost`, {
         params: { post: post._id },
       })
       .then((res) => {
@@ -124,7 +125,7 @@ function Post({ post, onDeletePost }) {
         }
       });
     axios
-      .get("http://localhost:5000/user/getPost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -134,12 +135,12 @@ function Post({ post, onDeletePost }) {
   useEffect(() => {
     getPost();
     axios
-      .get("http://localhost:5000/user/getUser", { params: { id: post.user } })
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, { params: { id: post.user } })
       .then((res) => {
         setUser(res.data);
       });
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -153,7 +154,7 @@ function Post({ post, onDeletePost }) {
 
   function like() {
     axios
-      .put("http://localhost:5000/user/like", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/like`, {
         post: post._id,
         user: localStorage.getItem("user"),
       })
@@ -165,7 +166,7 @@ function Post({ post, onDeletePost }) {
 
   function unlike() {
     axios
-      .put("http://localhost:5000/user/unlike", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unlike`, {
         post: post._id,
         user: localStorage.getItem("user"),
       })
@@ -177,7 +178,7 @@ function Post({ post, onDeletePost }) {
 
   function save() {
     axios
-      .put("http://localhost:5000/user/save", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/save`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })
@@ -188,7 +189,7 @@ function Post({ post, onDeletePost }) {
   }
   function unsave() {
     axios
-      .put("http://localhost:5000/user/unsave", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unsave`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })
@@ -254,7 +255,7 @@ function Post({ post, onDeletePost }) {
             onClick={() => navigate(`/profile/${user._id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
-            src={`http://localhost:5000/${user.img}`}
+            src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`}
           />
           <h4
             onClick={() => navigate(`/profile/${user._id}`)}
@@ -268,7 +269,7 @@ function Post({ post, onDeletePost }) {
         <i onClick={() => setOpened3(true)} class="fa-solid fa-ellipsis"></i>
       </div>
       <div onDoubleClick={like} className={style["img"]}>
-        <img src={`http://localhost:5000/${post.img}`} />
+        <img src={`https://instagram-back-7wri.onrender.com/${post.img}`} />
       </div>
       <div className={style["icons"]}>
         <div className={style["left"]}>

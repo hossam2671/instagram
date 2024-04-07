@@ -9,12 +9,13 @@ import { setPost } from "../../Redux/Slices/Posts";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.PostSlice);
   const navigate = useNavigate();
   function getPost(){
     axios
-      .get("http://localhost:5000/user/getPost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {

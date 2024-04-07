@@ -5,9 +5,10 @@ import axios from "axios";
 import TheExplore from "./TheExplore/TheExplore";
 
 function Explore() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/user/explore").then((res) => {
+    axios.get(`${REACT_APP_INSTAGRAM_API_URL}user/explore`).then((res) => {
       setPosts(res.data);
     });
   }, []);

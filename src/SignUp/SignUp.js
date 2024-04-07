@@ -14,6 +14,7 @@ import DangerousIcon from "@mui/icons-material/Dangerous";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -39,7 +40,7 @@ function SignUp() {
   function signUp() {
     if (theErrors.length === 0 && password) {
       axios
-        .post("http://localhost:5000/auth/signUp", {
+        .post(`${REACT_APP_INSTAGRAM_API_URL}auth/signUp`, {
           name: name,
           userName: username,
           password: password,
@@ -92,7 +93,7 @@ function SignUp() {
                 phoneRegex.test(e.target.value)
               ) {
                 axios
-                  .post("http://localhost:5000/auth/checkEmail", {
+                  .post(`${REACT_APP_INSTAGRAM_API_URL}auth/checkEmail`, {
                     email: e.target.value,
                   })
                   .then((res) => {
@@ -198,7 +199,7 @@ function SignUp() {
             size="small"
             onKeyUp={(e) => {
               axios
-                .post("http://localhost:5000/auth/checkUserName", {
+                .post(`${REACT_APP_INSTAGRAM_API_URL}auth/checkUserName`, {
                   userName: e.target.value,
                 })
                 .then(() => {

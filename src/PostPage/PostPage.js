@@ -17,6 +17,7 @@ import PostInPostPage from "./PostInPostPage/PostInPostPage";
 import Footer from "../Footer/Footer";
 
 function PostPage() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const { id } = useParams();
   const dispatch = useDispatch();
   const [post, setPost] = useState({});
@@ -81,7 +82,7 @@ function PostPage() {
 
   function getPost() {
     axios
-      .get("http://localhost:5000/user/getOnePost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getOnePost`, {
         params: { post: id },
       })
       .then((res) => {
@@ -96,14 +97,14 @@ function PostPage() {
           setLiked(false);
         }
         axios
-          .get("http://localhost:5000/user/getUser", {
+          .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
             params: { id: res.data.user },
           })
           .then((result) => {
             console.log(result);
             setUser(result.data);
             axios
-              .get("http://localhost:5000/user/getTopPosts", {
+              .get(`${REACT_APP_INSTAGRAM_API_URL}user/getTopPosts`, {
                 params: { id: result.data._id },
               })
               .then((resu) => {
@@ -115,7 +116,7 @@ function PostPage() {
 
   function like() {
     axios
-      .put("http://localhost:5000/user/like", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/like`, {
         post: post._id,
         user: localStorage.getItem("user"),
       })
@@ -127,7 +128,7 @@ function PostPage() {
 
   function unlike() {
     axios
-      .put("http://localhost:5000/user/unlike", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unlike`, {
         post: post._id,
         user: localStorage.getItem("user"),
       })
@@ -138,7 +139,7 @@ function PostPage() {
   }
   function save() {
     axios
-      .put("http://localhost:5000/user/save", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/save`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })
@@ -149,7 +150,7 @@ function PostPage() {
   }
   function unsave() {
     axios
-      .put("http://localhost:5000/user/unsave", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unsave`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })
@@ -162,7 +163,7 @@ function PostPage() {
   function addComment() {
     if (comment) {
       axios
-        .post("http://localhost:5000/user/addComment", {
+        .post(`${REACT_APP_INSTAGRAM_API_URL}user/addComment`, {
           user: localStorage.getItem("user"),
           post: post._id,
           content: comment,
@@ -171,7 +172,7 @@ function PostPage() {
           getPost();
           setComment("");
           axios
-            .get("http://localhost:5000/user/getPost", {
+            .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
               params: { id: localStorage.getItem("user") },
             })
             .then((res) => {
@@ -184,7 +185,7 @@ function PostPage() {
   useEffect(() => {
     getPost();
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -232,7 +233,7 @@ function PostPage() {
       <div style={{ paddingTop: "5vh" }}>
         <div className={style["postDetails"]}>
           <div className={style["img"]}>
-            <img src={`http://localhost:5000/${post.img}`} />
+            <img src={`${REACT_APP_INSTAGRAM_API_URL}${post.img}`} />
           </div>
           <div className={style["post"]}>
             <div className={style["head"]}>
@@ -240,7 +241,7 @@ function PostPage() {
                 <img
                   onMouseEnter={() => setShowUserDetails(true)}
                   onMouseLeave={() => setShowUserDetails(false)}
-                  src={`http://localhost:5000/${user?.img}`}
+                  src={`${REACT_APP_INSTAGRAM_API_URL}${user?.img}`}
                 />
                 <h4
                   onMouseEnter={() => setShowUserDetails(true)}
@@ -256,7 +257,7 @@ function PostPage() {
             </div>
             <div className={style["scroll"]}>
               <div className={style["content"]}>
-                <img src={`http://localhost:5000/${user?.img}`} />
+                <img src={`${REACT_APP_INSTAGRAM_API_URL}${user?.img}`} />
                 <div className={style["user"]}>
                   <h4>
                     <span>{user.userName}</span> {post?.content}
@@ -309,7 +310,7 @@ function PostPage() {
               <h6>{date}</h6>
             </div>
             <div className={style["textField"]}>
-              <img src={`http://localhost:5000/${user?.img}`} />
+              <img src={`${REACT_APP_INSTAGRAM_API_URL}${user?.img}`} />
               <TextField
                 placeholder="Add a comment"
                 sx={{

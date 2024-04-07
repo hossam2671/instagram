@@ -5,7 +5,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SwitchModal from "../../../SwitchModal/SwitchModal";
 
+
 function Suggest() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
   const [user, setUser] = useState({});
@@ -17,7 +19,7 @@ function Suggest() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -27,7 +29,7 @@ function Suggest() {
         navigate("/login");
       });
     axios
-      .get("http://localhost:5000/user/getSuggested", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getSuggested`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -41,7 +43,7 @@ function Suggest() {
       <SwitchModal open={opened} handleClose={(x) => handleClose(x)} />
       <div className={style["profile"]}>
         <div className={style["info"]}>
-          <img src={`http://localhost:5000/${user.img}`} />
+          <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
           <div className={style["name"]}>
             <h5>{user.name}</h5>
             <h5>{user.userName}</h5>

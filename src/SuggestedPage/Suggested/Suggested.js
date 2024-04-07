@@ -4,12 +4,13 @@ import style from "./Suggested.module.css";
 import UserDetails from "../../UserDetails/UserDetails";
 
 function Suggested({ name, id, img, userName, user }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [followed, setFollowed] = useState(false);
   const [following, setFollowing] = useState(false);
   const [showUserDetails, setShowUserDetails] = useState(false);
 
   axios
-    .get("http://localhost:5000/user/getUser", {
+    .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
       params: { id: localStorage.getItem("user") },
     })
     .then((res) => {
@@ -23,7 +24,7 @@ function Suggested({ name, id, img, userName, user }) {
 
   function follow() {
     axios
-      .put("http://localhost:5000/user/follow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/follow`, {
         follower: localStorage.getItem("user"),
         following: id,
       })
@@ -33,7 +34,7 @@ function Suggested({ name, id, img, userName, user }) {
   }
   function unfollow() {
     axios
-      .put("http://localhost:5000/user/unfollow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unfollow`, {
         follower: localStorage.getItem("user"),
         following: id,
       })
@@ -57,7 +58,7 @@ function Suggested({ name, id, img, userName, user }) {
           <img
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
-            src={`http://localhost:5000/${img}`}
+            src={`${REACT_APP_INSTAGRAM_API_URL}${img}`}
           />
           <div className={style["name"]}>
             <h5

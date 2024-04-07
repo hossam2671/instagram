@@ -28,6 +28,7 @@ function OptionsModal({
   onDeletePost,
   openPostModal,
 }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,7 +39,7 @@ function OptionsModal({
   };
   function deletePost() {
     axios
-      .delete("http://localhost:5000/user/delete", {
+      .delete(`${REACT_APP_INSTAGRAM_API_URL}user/delete`, {
         params: {
           post: post._id,
           user: user._id,
@@ -51,7 +52,7 @@ function OptionsModal({
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -65,7 +66,7 @@ function OptionsModal({
 
   function getPost() {
     axios
-      .get("http://localhost:5000/user/getPost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -76,7 +77,7 @@ function OptionsModal({
 
   function save() {
     axios
-      .put("http://localhost:5000/user/save", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/save`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })
@@ -87,7 +88,7 @@ function OptionsModal({
   }
   function unSave() {
     axios
-      .put("http://localhost:5000/user/unSave", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unSave`, {
         user: localStorage.getItem("user"),
         post: post._id,
       })

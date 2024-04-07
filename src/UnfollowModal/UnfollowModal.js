@@ -19,6 +19,7 @@ const modalStyle = {
   };
 
 function UnfollowModal({ open: op, handleClose: close, user}) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
     const dispatch = useDispatch();
     
     const handleClose = (x) => {
@@ -27,7 +28,7 @@ function UnfollowModal({ open: op, handleClose: close, user}) {
 
     function getPost(){
         axios
-      .get("http://localhost:5000/user/getPost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -36,7 +37,7 @@ function UnfollowModal({ open: op, handleClose: close, user}) {
     }
 
     function unfollow(){
-        axios.put("http://localhost:5000/user/unfollow",{
+        axios.put(`${REACT_APP_INSTAGRAM_API_URL}user/unfollow`,{
           follower:localStorage.getItem("user"),
           following:user._id
       }).then((res)=>{
@@ -54,7 +55,7 @@ function UnfollowModal({ open: op, handleClose: close, user}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle} className={style["content"]}>
-            <img src={`http://localhost:5000/${user.img}`} />
+            <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
             <h4>Unfollow @{user.userName}?</h4>
             <ul>
                 <li onClick={unfollow}>Unfollow</li>

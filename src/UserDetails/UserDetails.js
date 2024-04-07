@@ -5,13 +5,14 @@ import { useDispatch } from "react-redux";
 import { setPost } from "../Redux/Slices/Posts";
 
 function UserDetails({ user }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
   const [mine, setMine] = useState(false);
   useEffect(() => {
     user._id === localStorage.getItem("user") ? setMine(true) : setMine(false);
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -34,7 +35,7 @@ function UserDetails({ user }) {
 
   function getPost() {
     axios
-      .get("http://localhost:5000/user/getPost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -44,7 +45,7 @@ function UserDetails({ user }) {
 
   function follow() {
     axios
-      .put("http://localhost:5000/user/follow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/follow`, {
         follower: localStorage.getItem("user"),
         following: user._id,
       })
@@ -55,7 +56,7 @@ function UserDetails({ user }) {
   }
   function unfollow() {
     axios
-      .put("http://localhost:5000/user/unfollow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unfollow`, {
         follower: localStorage.getItem("user"),
         following: user._id,
       })
@@ -67,7 +68,7 @@ function UserDetails({ user }) {
   return (
     <div className={style["userDetails"]}>
       <div className={style["userHeader"]}>
-        <img src={`http://localhost:5000/${user.img}`} />
+        <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
         <div className={style["names"]}>
           <h3>{user.userName}</h3>
           <h3>{user.name}</h3>
@@ -92,7 +93,7 @@ function UserDetails({ user }) {
           user.posts
             .slice(0, 3)
             .map((post) => (
-              <img key={post._id} src={`http://localhost:5000/${post.img}`} />
+              <img key={post._id} src={`${REACT_APP_INSTAGRAM_API_URL}${post.img}`} />
             ))
         ) : (
           <div className={style["noPosts"]}>

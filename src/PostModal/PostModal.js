@@ -33,6 +33,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function PostModal({ open: op, handleClose: close, thePost , edit }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -54,7 +55,7 @@ function PostModal({ open: op, handleClose: close, thePost , edit }) {
   };
   React.useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -74,10 +75,10 @@ function PostModal({ open: op, handleClose: close, thePost , edit }) {
     formData.append("img", selectedImage);
     formData.append("content", content);
     formData.append("user", localStorage.getItem("user"));
-    axios.post("http://localhost:5000/user/addPost", formData).then((res) => {
+    axios.post(`${REACT_APP_INSTAGRAM_API_URL}user/addPost`, formData).then((res) => {
       handleClose();
       axios
-        .get("http://localhost:5000/user/getPost", {
+        .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
           params: { id: localStorage.getItem("user") },
         })
         .then((res) => {
@@ -87,13 +88,13 @@ function PostModal({ open: op, handleClose: close, thePost , edit }) {
   }
 
   function editPost(){
-    axios.put("http://localhost:5000/user/editPost",{
+    axios.put(`${REACT_APP_INSTAGRAM_API_URL}user/editPost`,{
       post:thePost._id,
       content:content
     }).then((res) => {
       handleClose();
       axios
-        .get("http://localhost:5000/user/getPost", {
+        .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
           params: { id: localStorage.getItem("user") },
         })
         .then((res) => {
@@ -157,11 +158,11 @@ function PostModal({ open: op, handleClose: close, thePost , edit }) {
           {(selectedImage || edited) && (
             <div className={style["select"]}>
               <div className={style["img"]}>
-                <img src={selectedImageView?selectedImageView:`http://localhost:5000/${thePost.img}`} />
+                <img src={selectedImageView?selectedImageView:`${REACT_APP_INSTAGRAM_API_URL}${thePost.img}`} />
               </div>
               <div className={style["text"]}>
                 <div className={style["textHeader"]}>
-                  <img src={`http://localhost:5000/${user.img}`} />
+                  <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
                   <h4>{user.userName}</h4>
                 </div>
                 <TextField

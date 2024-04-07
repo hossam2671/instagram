@@ -3,17 +3,18 @@ import style from "./Like.module.css";
 import axios from "axios";
 
 function Like({ id }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [user, setUser] = useState({});
   const [followed, setFollowed] = useState(false);
   useEffect(()=>{
 
     axios
-      .get("http://localhost:5000/user/getUser", { params: { id: id } })
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, { params: { id: id } })
       .then((res) => {
         setUser(res.data);
       });
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -33,7 +34,7 @@ function Like({ id }) {
 
   function follow() {
     axios
-      .put("http://localhost:5000/user/follow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/follow`, {
         follower: localStorage.getItem("user"),
         following: id,
       })
@@ -43,7 +44,7 @@ function Like({ id }) {
   }
   function unfollow() {
     axios
-      .put("http://localhost:5000/user/unfollow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unfollow`, {
         follower: localStorage.getItem("user"),
         following: id,
       })
@@ -54,7 +55,7 @@ function Like({ id }) {
   return (
     <div className={style["like"]}>
       <div className={style["info"]}>
-        <img src={`http://localhost:5000/${user.img}`} />
+        <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
         <div className={style["name"]}>
           <h4>{user.userName}</h4>
           <h4>{user.name}</h4>

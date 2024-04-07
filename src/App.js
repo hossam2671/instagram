@@ -10,6 +10,7 @@ import SuggestedPage from "./SuggestedPage/SuggestedPage";
 import PostPage from "./PostPage/PostPage";
 import Profile from "./Profile/Profile";
 function App() {
+  
   return (
     <Provider store={Store}>
       <BrowserRouter>

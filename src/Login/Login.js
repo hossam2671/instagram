@@ -15,6 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Login() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [img, setImage] = useState(photo1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +32,7 @@ function Login() {
 
   function login() {
     axios
-      .post("http://localhost:5000/auth/login", {
+      .post(`${REACT_APP_INSTAGRAM_API_URL}auth/login`, {
         email: email,
         password: password,
       })

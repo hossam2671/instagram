@@ -6,10 +6,11 @@ import axios from "axios";
 import Suggested from "./Suggested/Suggested";
 
 function SuggestedPage() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [suggested, setSuggested] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getSuggested", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getSuggested`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {

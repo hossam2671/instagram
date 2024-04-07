@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import FollowingModal from "../FollowingModal/FollowingModal";
 
 function Profile() {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const navigate = useNavigate();
   const { id } = useParams();
   const [user, setUser] = useState({});
@@ -23,28 +24,28 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getUser", { params: { id: id } })
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, { params: { id: id } })
       .then((res) => {
         setUser(res.data);
       }).catch((err)=>{
         navigate("/login")
       })
     axios
-      .get("http://localhost:5000/user/userPosts", { params: { id: id } })
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/userPosts`, { params: { id: id } })
       .then((res) => {
         setPosts(res.data);
       }).catch((err)=>{
         navigate("/login")
       })
     axios
-      .get("http://localhost:5000/user/userSavedPosts", { params: { id: id } })
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/userSavedPosts`, { params: { id: id } })
       .then((res) => {
         setSavedPosts(res.data);
       }).catch((err)=>{
         navigate("/login")
       })
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -66,7 +67,7 @@ function Profile() {
         navigate("/login")
       })
     axios
-      .get("http://localhost:5000/user/followedBy", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/followedBy`, {
         params: { user: id, mine: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -85,7 +86,7 @@ function Profile() {
 
   function follow() {
     axios
-      .put("http://localhost:5000/user/follow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/follow`, {
         follower: localStorage.getItem("user"),
         following: id,
       })
@@ -109,7 +110,7 @@ function Profile() {
       <div className={style["profile"]}>
         <div className={style["info"]}>
           <div className={style["img"]}>
-            <img src={`http://localhost:5000/${user.img}`} />
+            <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
           </div>
           <div className={style["details"]}>
             <div className={style["name"]}>

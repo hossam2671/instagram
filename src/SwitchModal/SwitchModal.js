@@ -26,6 +26,7 @@ const modalStyle = {
 };
 
 function SwitchModal({ open: op, handleClose: close }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const dispatch = useDispatch();
   const handleClose = (x) => {
     close(x);
@@ -38,7 +39,7 @@ function SwitchModal({ open: op, handleClose: close }) {
 
   function login() {
     axios
-      .post("http://localhost:5000/auth/login", {
+      .post(`${REACT_APP_INSTAGRAM_API_URL}auth/login`, {
         email: email,
         password: password,
       })
@@ -48,7 +49,7 @@ function SwitchModal({ open: op, handleClose: close }) {
         close();
         setErrMsg("");
         axios
-          .get("http://localhost:5000/user/getPost", {
+          .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
             params: { id: res.data._id },
           })
           .then((result) => {

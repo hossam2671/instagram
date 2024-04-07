@@ -4,6 +4,7 @@ import axios from "axios";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
 
 function Following({ id }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const [followed, setFollowed] = useState(false);
   const [opened,setOpened] = useState(false)
   function handleClose(){
@@ -11,7 +12,7 @@ function Following({ id }) {
   }
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -31,7 +32,7 @@ function Following({ id }) {
 
   function follow() {
     axios
-      .put("http://localhost:5000/user/follow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/follow`, {
         follower: localStorage.getItem("user"),
         following: id._id,
       })
@@ -48,7 +49,7 @@ function Following({ id }) {
       />
       <div className={style["following"]}>
         <div className={style["info"]}>
-          <img src={`http://localhost:5000/${id.img}`} />
+          <img src={`${REACT_APP_INSTAGRAM_API_URL}${id.img}`} />
           <div className={style["name"]}>
             <h4>{id.userName}</h4>
             <h4>{id.name}</h4>

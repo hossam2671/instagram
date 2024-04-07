@@ -7,6 +7,7 @@ import UserDetails from "../../../../UserDetails/UserDetails";
 import { useNavigate } from "react-router-dom";
 
 function Suggestion({ name, id, img, user }) {
+  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [followed, setFollowed] = useState(false);
@@ -15,7 +16,7 @@ function Suggestion({ name, id, img, user }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getUser", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
         params: { id: user._id },
       })
       .then((res) => {
@@ -23,7 +24,7 @@ function Suggestion({ name, id, img, user }) {
       });
   }, [setShowUserDetails]);
   axios
-    .get("http://localhost:5000/user/getUser", {
+    .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
       params: { id: localStorage.getItem("user") },
     })
     .then((res) => {
@@ -41,7 +42,7 @@ function Suggestion({ name, id, img, user }) {
     });
   function getPost() {
     axios
-      .get("http://localhost:5000/user/getPost", {
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getPost`, {
         params: { id: localStorage.getItem("user") },
       })
       .then((res) => {
@@ -51,7 +52,7 @@ function Suggestion({ name, id, img, user }) {
 
   function follow() {
     axios
-      .put("http://localhost:5000/user/follow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/follow`, {
         follower: localStorage.getItem("user"),
         following: id,
       })
@@ -62,7 +63,7 @@ function Suggestion({ name, id, img, user }) {
   }
   function unfollow() {
     axios
-      .put("http://localhost:5000/user/unfollow", {
+      .put(`${REACT_APP_INSTAGRAM_API_URL}user/unfollow`, {
         follower: localStorage.getItem("user"),
         following: id,
       })
@@ -87,7 +88,7 @@ function Suggestion({ name, id, img, user }) {
           onClick={()=> navigate(`/profile/${id}`)}
           onMouseEnter={() => setShowUserDetails(true)}
           onMouseLeave={() => setShowUserDetails(false)}
-          src={`http://localhost:5000/${img}`}
+          src={`${REACT_APP_INSTAGRAM_API_URL}${img}`}
         />
         <div className={style["name"]}>
           <h5
