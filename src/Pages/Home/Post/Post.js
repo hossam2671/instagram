@@ -255,7 +255,7 @@ function Post({ post, onDeletePost }) {
             onClick={() => navigate(`/profile/${user._id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
-            src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`}
+            src={`https://res.cloudinary.com/dmgtca6qs/image/upload/${user.img}`}
           />
           <h4
             onClick={() => navigate(`/profile/${user._id}`)}
