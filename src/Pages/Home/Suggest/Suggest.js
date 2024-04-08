@@ -62,7 +62,7 @@ function Suggest() {
         <h5 onClick={()=>navigate("/suggested")}>See All</h5>
       </div>
       <div className={style["suggestions"]}>
-        {suggested.slice(0, 5).map((suggest) => (
+        {suggested?.slice(0, 5).map((suggest) => (
           <Suggestion
             key={suggest._id}
             name={suggest.userName}
