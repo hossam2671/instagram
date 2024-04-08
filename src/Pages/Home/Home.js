@@ -34,7 +34,7 @@ function Home() {
         <div className={style["posts"]}>
           {
             posts.length > 0 ?
-          (posts.map((post) => (
+          (posts?.map((post) => (
             <Post key={post._id} post={post} onDeletePost={getPost}/>
           ))):<h4>There are no posts to show</h4>
           }
