@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setPost } from "../Redux/Slices/Posts";
 
 function UserDetails({ user }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
   const [mine, setMine] = useState(false);
@@ -93,7 +93,7 @@ function UserDetails({ user }) {
           user.posts
             .slice(0, 3)
             .map((post) => (
-              <img key={post._id} src={`${REACT_APP_INSTAGRAM_API_URL}${post.img}`} />
+              <img key={post._id} src={`${REACT_APP_IMAGE_URL}${post.img}`} />
             ))
         ) : (
           <div className={style["noPosts"]}>

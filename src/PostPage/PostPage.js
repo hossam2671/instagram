@@ -17,7 +17,7 @@ import PostInPostPage from "./PostInPostPage/PostInPostPage";
 import Footer from "../Footer/Footer";
 
 function PostPage() {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const { id } = useParams();
   const dispatch = useDispatch();
   const [post, setPost] = useState({});
@@ -233,7 +233,7 @@ function PostPage() {
       <div style={{ paddingTop: "5vh" }}>
         <div className={style["postDetails"]}>
           <div className={style["img"]}>
-            <img src={`${REACT_APP_INSTAGRAM_API_URL}${post.img}`} />
+            <img src={`${REACT_APP_IMAGE_URL}${post.img}`} />
           </div>
           <div className={style["post"]}>
             <div className={style["head"]}>

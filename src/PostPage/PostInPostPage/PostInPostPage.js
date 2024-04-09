@@ -5,7 +5,7 @@ import PostDetails from "../../PostDetails/PostDetails";
 import { useNavigate } from "react-router-dom";
 
 function PostInPostPage({ post }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
   const [user, setUser] = useState({});
@@ -55,7 +55,7 @@ function PostInPostPage({ post }) {
         date={date}
       />
       <div onClick={() => navigate(`/postPage/${post._id}`)} className={style["theImg"]}>
-        <img src={`${REACT_APP_INSTAGRAM_API_URL}${post.img}`} alt="Post" />
+        <img src={`${REACT_APP_IMAGE_URL}${post.img}`} alt="Post" />
       </div>
       <div className={style["icons"]}>
         <div className={style["likes"]}>

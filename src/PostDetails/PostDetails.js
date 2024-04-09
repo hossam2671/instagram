@@ -29,7 +29,7 @@ const modalStyle = {
 };
 
 function PostDetails({ open: op, handleClose: close, post, user, date, onDeletePost }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const [comment, setComment] = React.useState("");
   const [thePost, setThePost] = React.useState(post);
   const [liked, setLiked] = React.useState(false);
@@ -214,7 +214,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
           )}
           <div className={style["postDetails"]}>
             <div className={style["img"]}>
-              <img src={`${REACT_APP_INSTAGRAM_API_URL}${post.img}`} />
+              <img src={`${REACT_APP_IMAGE_URL}${post.img}`} />
             </div>
             <div className={style["post"]}>
               <div className={style["head"]}>

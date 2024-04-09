@@ -33,7 +33,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function PostModal({ open: op, handleClose: close, thePost , edit }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -158,7 +158,7 @@ function PostModal({ open: op, handleClose: close, thePost , edit }) {
           {(selectedImage || edited) && (
             <div className={style["select"]}>
               <div className={style["img"]}>
-                <img src={selectedImageView?selectedImageView:`${REACT_APP_INSTAGRAM_API_URL}${thePost.img}`} />
+                <img src={selectedImageView?selectedImageView:`${REACT_APP_IMAGE_URL}${thePost.img}`} />
               </div>
               <div className={style["text"]}>
                 <div className={style["textHeader"]}>
