@@ -32,7 +32,7 @@ function Login() {
 
   function login() {
     axios
-      .post(`${REACT_APP_INSTAGRAM_API_URL}auth/logi`, {
+      .post(`${REACT_APP_INSTAGRAM_API_URL}auth/login`, {
         email: email,
         password: password,
       })
