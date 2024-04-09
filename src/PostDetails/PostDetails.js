@@ -222,7 +222,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
                   <img
                     onMouseEnter={() => setShowUserDetails(true)}
                     onMouseLeave={() => setShowUserDetails(false)}
-                    src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`}
+                    src={`${REACT_APP_IMAGE_URL}${user.img}`}
                   />
                   <h4
                     onMouseEnter={() => setShowUserDetails(true)}
@@ -235,7 +235,7 @@ function PostDetails({ open: op, handleClose: close, post, user, date, onDeleteP
               </div>
               <div className={style["scroll"]}>
                 <div className={style["content"]}>
-                  <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+                  <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
                   <div className={style["user"]}>
                     <h4>
                       <span>{user.userName}</span> {thePost?.content}

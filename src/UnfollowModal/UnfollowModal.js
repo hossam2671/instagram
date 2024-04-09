@@ -19,7 +19,7 @@ const modalStyle = {
   };
 
 function UnfollowModal({ open: op, handleClose: close, user}) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
     const dispatch = useDispatch();
     
     const handleClose = (x) => {
@@ -55,7 +55,7 @@ function UnfollowModal({ open: op, handleClose: close, user}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle} className={style["content"]}>
-            <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+            <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
             <h4>Unfollow @{user.userName}?</h4>
             <ul>
                 <li onClick={unfollow}>Unfollow</li>

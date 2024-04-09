@@ -19,7 +19,7 @@ const modalStyle = {
 };
 
 function AboutModal({ open: op, handleClose: close, user }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const handleClose = (x) => {
     close(x);
   };
@@ -55,7 +55,7 @@ function AboutModal({ open: op, handleClose: close, user }) {
       >
         <Box sx={modalStyle} className={style["content"]}>
           <h4>About this account</h4>
-          <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+          <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
           <h3>{user.userName}</h3>
           <p>
             To help keep our community authentic, we’re showing information

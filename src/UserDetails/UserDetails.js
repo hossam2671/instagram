@@ -68,7 +68,7 @@ function UserDetails({ user }) {
   return (
     <div className={style["userDetails"]}>
       <div className={style["userHeader"]}>
-        <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+        <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
         <div className={style["names"]}>
           <h3>{user.userName}</h3>
           <h3>{user.name}</h3>

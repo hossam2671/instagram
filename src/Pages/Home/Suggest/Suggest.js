@@ -7,7 +7,7 @@ import SwitchModal from "../../../SwitchModal/SwitchModal";
 
 
 function Suggest() {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
   const [user, setUser] = useState({});
@@ -43,7 +43,7 @@ function Suggest() {
       <SwitchModal open={opened} handleClose={(x) => handleClose(x)} />
       <div className={style["profile"]}>
         <div className={style["info"]}>
-          <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+          <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
           <div className={style["name"]}>
             <h5>{user.name}</h5>
             <h5>{user.userName}</h5>

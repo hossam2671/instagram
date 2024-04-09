@@ -241,7 +241,7 @@ function PostPage() {
                 <img
                   onMouseEnter={() => setShowUserDetails(true)}
                   onMouseLeave={() => setShowUserDetails(false)}
-                  src={`${REACT_APP_INSTAGRAM_API_URL}${user?.img}`}
+                  src={`${REACT_APP_IMAGE_URL}${user?.img}`}
                 />
                 <h4
                   onMouseEnter={() => setShowUserDetails(true)}
@@ -257,7 +257,7 @@ function PostPage() {
             </div>
             <div className={style["scroll"]}>
               <div className={style["content"]}>
-                <img src={`${REACT_APP_INSTAGRAM_API_URL}${user?.img}`} />
+                <img src={`${REACT_APP_IMAGE_URL}${user?.img}`} />
                 <div className={style["user"]}>
                   <h4>
                     <span>{user.userName}</span> {post?.content}
@@ -310,7 +310,7 @@ function PostPage() {
               <h6>{date}</h6>
             </div>
             <div className={style["textField"]}>
-              <img src={`${REACT_APP_INSTAGRAM_API_URL}${user?.img}`} />
+              <img src={`${REACT_APP_IMAGE_URL}${user?.img}`} />
               <TextField
                 placeholder="Add a comment"
                 sx={{

@@ -7,7 +7,7 @@ import UserDetails from "../../../../UserDetails/UserDetails";
 import { useNavigate } from "react-router-dom";
 
 function Suggestion({ name, id, img, user }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [followed, setFollowed] = useState(false);
@@ -88,7 +88,7 @@ function Suggestion({ name, id, img, user }) {
           onClick={()=> navigate(`/profile/${id}`)}
           onMouseEnter={() => setShowUserDetails(true)}
           onMouseLeave={() => setShowUserDetails(false)}
-          src={`${REACT_APP_INSTAGRAM_API_URL}${img}`}
+          src={`${REACT_APP_IMAGE_URL}${img}`}
         />
         <div className={style["name"]}>
           <h5

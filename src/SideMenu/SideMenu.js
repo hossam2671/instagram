@@ -8,7 +8,7 @@ import axios from "axios";
 import SwitchModal from "../SwitchModal/SwitchModal";
 
 function SideMenu() {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const navigate = useNavigate();
   const menuRef = useRef(null);
   const [opened, setOpened] = useState(false);
@@ -113,7 +113,7 @@ function SideMenu() {
             <i class="fa-solid fa-plus"></i> <span>create</span>
           </li>
           <li onClick={()=>navigate(`/profile/${localStorage.getItem("user")}`)}>
-            <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />{" "}
+            <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />{" "}
             <span>Profile</span>
           </li>
         </ul>

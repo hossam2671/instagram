@@ -162,7 +162,7 @@ function PostModal({ open: op, handleClose: close, thePost , edit }) {
               </div>
               <div className={style["text"]}>
                 <div className={style["textHeader"]}>
-                  <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+                  <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
                   <h4>{user.userName}</h4>
                 </div>
                 <TextField

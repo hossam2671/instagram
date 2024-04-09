@@ -3,7 +3,7 @@ import style from "./Like.module.css";
 import axios from "axios";
 
 function Like({ id }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const [user, setUser] = useState({});
   const [followed, setFollowed] = useState(false);
   useEffect(()=>{
@@ -55,7 +55,7 @@ function Like({ id }) {
   return (
     <div className={style["like"]}>
       <div className={style["info"]}>
-        <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+        <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
         <div className={style["name"]}>
           <h4>{user.userName}</h4>
           <h4>{user.name}</h4>

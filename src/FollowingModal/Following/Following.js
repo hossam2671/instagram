@@ -4,7 +4,7 @@ import axios from "axios";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
 
 function Following({ id }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const [followed, setFollowed] = useState(false);
   const [opened,setOpened] = useState(false)
   function handleClose(){
@@ -49,7 +49,7 @@ function Following({ id }) {
       />
       <div className={style["following"]}>
         <div className={style["info"]}>
-          <img src={`${REACT_APP_INSTAGRAM_API_URL}${id.img}`} />
+          <img src={`${REACT_APP_IMAGE_URL}${id.img}`} />
           <div className={style["name"]}>
             <h4>{id.userName}</h4>
             <h4>{id.name}</h4>

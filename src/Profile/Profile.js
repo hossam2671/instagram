@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import FollowingModal from "../FollowingModal/FollowingModal";
 
 function Profile() {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const navigate = useNavigate();
   const { id } = useParams();
   const [user, setUser] = useState({});
@@ -110,7 +110,7 @@ function Profile() {
       <div className={style["profile"]}>
         <div className={style["info"]}>
           <div className={style["img"]}>
-            <img src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`} />
+            <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
           </div>
           <div className={style["details"]}>
             <div className={style["name"]}>

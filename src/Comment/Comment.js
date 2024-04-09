@@ -6,7 +6,7 @@ import UserDetails from "../UserDetails/UserDetails";
 import { useNavigate } from "react-router-dom";
 
 function Comment({ user, comment }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const navigate = useNavigate();
   const [theComment, setTheComment] = useState("");
   const [liked, setLiked] = useState(false);
@@ -78,7 +78,7 @@ function Comment({ user, comment }) {
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
             onClick={() => navigate(`/profile/${user._id}`)}
-            src={`${REACT_APP_INSTAGRAM_API_URL}${theComment?.user?.img}`}
+            src={`${REACT_APP_IMAGE_URL}${theComment?.user?.img}`}
           />
           <div className={style["commentContent"]}>
             <div className={style["user"]}>
