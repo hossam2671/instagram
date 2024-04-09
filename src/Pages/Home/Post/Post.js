@@ -13,7 +13,6 @@ import AboutModal from "../../../AboutModal/AboutModal";
 import UserDetails from "../../../UserDetails/UserDetails";
 import PostModal from "../../../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../../Loader/Loader";
 
 function Post({ post, onDeletePost }) {
   const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
@@ -200,9 +199,6 @@ function Post({ post, onDeletePost }) {
       });
   }
   return (
-    <>
-    {
-      thePost ?(
     <div className={style["post"]}>
       <LikesModal
         open={opened}
@@ -259,7 +255,7 @@ function Post({ post, onDeletePost }) {
             onClick={() => navigate(`/profile/${user._id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
-            src={`${REACT_APP_IMAGE_URL}${user.img}`}
+            src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`}
           />
           <h4
             onClick={() => navigate(`/profile/${user._id}`)}
@@ -353,10 +349,6 @@ function Post({ post, onDeletePost }) {
         />
       </div>
     </div>
-      ) : <Loader></Loader>
-    }
-    </>
-    
   );
 }
 
