@@ -9,10 +9,12 @@ import { setPost } from "../../Redux/Slices/Posts";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Loader/Loader";
 
+
 function Home() {
   const { REACT_APP_INSTAGRAM_API_URL } = process.env;
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.PostSlice);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   function getPost(){
     axios
@@ -21,8 +23,10 @@ function Home() {
       })
       .then((res) => {
         dispatch(setPost(res.data));
+        setLoading(false);
       }).catch((err)=>{
         navigate("/login")
+        setLoading(false);
       })
   }
   useEffect(() => {
@@ -31,7 +35,7 @@ function Home() {
   return (
     <>
     {
-      posts ? (
+      !loading ? (
 
       <div style={{ display: "flex" }}>
         <SideMenu onclose />
