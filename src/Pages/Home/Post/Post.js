@@ -15,7 +15,7 @@ import PostModal from "../../../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
 
 function Post({ post, onDeletePost }) {
-  const { REACT_APP_INSTAGRAM_API_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const [user, setUser] = useState({});
   const [thePost, setThePost] = useState({});
   const [liked, setLiked] = useState(false);
@@ -269,7 +269,7 @@ function Post({ post, onDeletePost }) {
         <i onClick={() => setOpened3(true)} class="fa-solid fa-ellipsis"></i>
       </div>
       <div onDoubleClick={like} className={style["img"]}>
-        <img src={`https://res.cloudinary.com/dmgtca6qs/image/upload/${post.img}`} />
+        <img src={`${REACT_APP_IMAGE_URL}${post.img}`} />
       </div>
       <div className={style["icons"]}>
         <div className={style["left"]}>
