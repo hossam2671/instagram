@@ -255,7 +255,7 @@ function Post({ post, onDeletePost }) {
             onClick={() => navigate(`/profile/${user._id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
-            src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`}
+            src={`${REACT_APP_IMAGE_URL}${user.img}`}
           />
           <h4
             onClick={() => navigate(`/profile/${user._id}`)}
