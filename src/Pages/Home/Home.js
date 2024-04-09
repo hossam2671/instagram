@@ -7,6 +7,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../Redux/Slices/Posts";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../Loader/Loader";
 
 function Home() {
   const { REACT_APP_INSTAGRAM_API_URL } = process.env;
@@ -29,6 +30,9 @@ function Home() {
   }, []);
   return (
     <>
+    {
+      posts ? (
+
       <div style={{ display: "flex" }}>
         <SideMenu onclose />
         <div className={style["posts"]}>
@@ -41,6 +45,8 @@ function Home() {
         </div>
         <Suggest />
       </div>
+      ) : <Loader />
+    }
     </>
   );
 }
