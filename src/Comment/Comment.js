@@ -73,7 +73,9 @@ function Comment({ user, comment }) {
         </div>
       )}
       <div className={style["comment"]}>
-        <div className={style["main"]}>
+        <div <div className="loader-container">
+      <div className="loader"></div>
+    </div>>
           <img
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}

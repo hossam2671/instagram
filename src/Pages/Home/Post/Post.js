@@ -13,6 +13,7 @@ import AboutModal from "../../../AboutModal/AboutModal";
 import UserDetails from "../../../UserDetails/UserDetails";
 import PostModal from "../../../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../Loader/Loader";
 
 function Post({ post, onDeletePost }) {
   const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
@@ -199,6 +200,9 @@ function Post({ post, onDeletePost }) {
       });
   }
   return (
+    <>
+    {
+      thePost ?(
     <div className={style["post"]}>
       <LikesModal
         open={opened}
@@ -349,6 +353,10 @@ function Post({ post, onDeletePost }) {
         />
       </div>
     </div>
+      ) : <Loader></Loader>
+    }
+    </>
+    
   );
 }
 
