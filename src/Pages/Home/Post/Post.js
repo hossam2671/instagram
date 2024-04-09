@@ -255,7 +255,7 @@ function Post({ post, onDeletePost }) {
             onClick={() => navigate(`/profile/${user._id}`)}
             onMouseEnter={() => setShowUserDetails(true)}
             onMouseLeave={() => setShowUserDetails(false)}
-            src={`https://res.cloudinary.com/dmgtca6qs/image/upload/${user.img}`}
+            src={`${REACT_APP_INSTAGRAM_API_URL}${user.img}`}
           />
           <h4
             onClick={() => navigate(`/profile/${user._id}`)}
@@ -269,7 +269,7 @@ function Post({ post, onDeletePost }) {
         <i onClick={() => setOpened3(true)} class="fa-solid fa-ellipsis"></i>
       </div>
       <div onDoubleClick={like} className={style["img"]}>
-        <img src={`https://instagram-back-7wri.onrender.com/${post.img}`} />
+        <img src={`https://res.cloudinary.com/dmgtca6qs/image/upload/${post.img}`} />
       </div>
       <div className={style["icons"]}>
         <div className={style["left"]}>
