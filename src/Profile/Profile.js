@@ -8,6 +8,7 @@ import UnfollowModal from "../UnfollowModal/UnfollowModal";
 import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
 import FollowingModal from "../FollowingModal/FollowingModal";
+import Loader from "../Loader/Loader";
 
 function Profile() {
   const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
@@ -21,14 +22,17 @@ function Profile() {
   const [users, setUsers] = useState([]);
   const [opened, setOpened] = useState(false);
   const [opened2, setOpened2] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, { params: { id: id } })
       .then((res) => {
         setUser(res.data);
+        setLoading(false);
       }).catch((err)=>{
         navigate("/login")
+        setLoading(false);
       })
     axios
       .get(`${REACT_APP_INSTAGRAM_API_URL}user/userPosts`, { params: { id: id } })
@@ -107,7 +111,9 @@ function Profile() {
         handleClose={(x) => handleClose2(x)}
         following={user.follwing}
       />
-      <div className={style["profile"]}>
+      {
+        !loading ? (
+          <div className={style["profile"]}>
         <div className={style["info"]}>
           <div className={style["img"]}>
             <img src={`${REACT_APP_IMAGE_URL}${user.img}`} />
@@ -213,6 +219,9 @@ function Profile() {
         </div>
         <Footer />
       </div>
+        ) : <Loader />
+      }
+      
     </div>
   );
 }

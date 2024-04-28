@@ -13,9 +13,10 @@ import AboutModal from "../../../AboutModal/AboutModal";
 import UserDetails from "../../../UserDetails/UserDetails";
 import PostModal from "../../../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../Loader/Loader";
 
 function Post({ post, onDeletePost }) {
-  const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
+  const { REACT_APP_INSTAGRAM_API_URL, REACT_APP_IMAGE_URL } = process.env;
   const [user, setUser] = useState({});
   const [thePost, setThePost] = useState({});
   const [liked, setLiked] = useState(false);
@@ -27,6 +28,7 @@ function Post({ post, onDeletePost }) {
   const [opened4, setOpened4] = useState(false);
   const [opened5, setOpened5] = useState(false);
   const [opened6, setOpened6] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState("");
   const [showUserDetails, setShowUserDetails] = useState(false);
   const dispatch = useDispatch();
@@ -135,9 +137,12 @@ function Post({ post, onDeletePost }) {
   useEffect(() => {
     getPost();
     axios
-      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, { params: { id: post.user } })
+      .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
+        params: { id: post.user },
+      })
       .then((res) => {
         setUser(res.data);
+        setLoading(false);
       });
     axios
       .get(`${REACT_APP_INSTAGRAM_API_URL}user/getUser`, {
@@ -199,7 +204,9 @@ function Post({ post, onDeletePost }) {
       });
   }
   return (
-    <div className={style["post"]}>
+    
+      !loading ? (
+        <div className={style["post"]}>
       <LikesModal
         open={opened}
         handleClose={(x) => handleClose(x)}
@@ -349,6 +356,9 @@ function Post({ post, onDeletePost }) {
         />
       </div>
     </div>
+      ) : <Loader />
+    
+    
   );
 }
 
