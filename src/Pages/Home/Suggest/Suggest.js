@@ -4,6 +4,8 @@ import Suggestion from "./Suggestion/Suggestion";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SwitchModal from "../../../SwitchModal/SwitchModal";
+import Loader from "../../../Loader/Loader";
+
 
 
 function Suggest() {
@@ -12,6 +14,7 @@ function Suggest() {
   const [opened, setOpened] = useState(false);
   const [user, setUser] = useState({});
   const [suggested, setSuggested] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleClose = (x) => {
     setOpened(false);
@@ -24,9 +27,11 @@ function Suggest() {
       })
       .then((res) => {
         setUser(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         navigate("/login");
+        setLoading(false);
       });
     axios
       .get(`${REACT_APP_INSTAGRAM_API_URL}user/getSuggested`, {
@@ -39,7 +44,8 @@ function Suggest() {
       });
   }, [opened]);
   return (
-    <div className={style["suggest"]}>
+    !loading ? (
+      <div className={style["suggest"]}>
       <SwitchModal open={opened} handleClose={(x) => handleClose(x)} />
       <div className={style["profile"]}>
         <div className={style["info"]}>
@@ -90,6 +96,8 @@ function Suggest() {
         <h4>© 2024 INSTAGRAM FROM META</h4>
       </div>
     </div>
+    ): <Loader />
+    
   );
 }
 
