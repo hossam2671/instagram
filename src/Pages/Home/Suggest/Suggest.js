@@ -5,7 +5,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SwitchModal from "../../../SwitchModal/SwitchModal";
 
-
 function Suggest() {
   const { REACT_APP_INSTAGRAM_API_URL , REACT_APP_IMAGE_URL } = process.env;
   const navigate = useNavigate();

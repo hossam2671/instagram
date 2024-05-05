@@ -95,3 +95,8 @@
     width: 40%;
     margin: 0 10px;
 }
+@media screen and (max-width: 1600px) {
+    .signUp{
+        padding: 20px 270px;
+    }
+}
